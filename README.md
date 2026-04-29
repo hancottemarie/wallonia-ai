@@ -2,3 +2,4 @@
  ---------------
 auto-save : ./commit.sh
  ----------
+interact
