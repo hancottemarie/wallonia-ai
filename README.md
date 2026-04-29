@@ -2,4 +2,5 @@
  ---------------
 auto-save : ./commit.sh
  ----------
-interactif 
+interactif with progress completion
+
