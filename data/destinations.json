@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "name": "Dinant",
+    "province": "Namur",
+    "vibe": "Adventure",
+    "budget_level": 2,
+    "description": "City of the saxophone, tucked between cliffs and the Meuse river.",
+    "tags": ["river", "citadel", "saxophone", "hiking"]
+  },
+  {
+    "id": 2,
+    "name": "Durbuy",
+    "province": "Luxembourg",
+    "vibe": "Chill",
+    "budget_level": 3,
+    "description": "Known as the smallest city in the world, very romantic and medieval.",
+    "tags": ["medieval", "gastronomy", "cobblestone", "romantic"]
+  },
+    {
+    "id": 3,
+    "name": "",
+    "province": "",
+    "vibe": "",
+    "budget_level": ,
+    "description": "",
+    "tags": []
+  }
+]
