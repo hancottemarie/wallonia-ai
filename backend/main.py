@@ -1,26 +1,27 @@
 import ctypes
+import os
+import json
 from pathlib import Path
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List, Optional
-import json
-import os
-
-
-lib_path = Path("../core-engine/scoring.so").absolute()
-scoring_lib = ctypes.CDLL(str(lib_path))
-
-scoring_lib.calculate_match_score.argtypes = [ctypes.c_int, ctypes.c_float, ctypes.c_int]
-scoring_lib.calculate_match_score.restype = ctypes.c_float
 
 app = FastAPI(title="Wallonia AI API")
 
-DATA_PATH = os.path.join("..", "data", "destinations.json")
+BASE_DIR = Path(__file__).resolve().parent
 
-class UserPreferences(BaseModel):
-    vibe: str
-    budget_max: int
-    province: Optional[str] = None
+DATA_PATH = BASE_DIR.parent / "data" / "destinations.json"
+
+LIB_PATH = BASE_DIR.parent / "core-engine" / "scoring.so" # ou .dll sur Windows
+
+if not LIB_PATH.exists():
+    print(f"❌ Erreur : Librairie introuvable à {LIB_PATH}")
+    scoring_lib = None
+else:
+    scoring_lib = ctypes.CDLL(str(LIB_PATH))
+    scoring_lib.calculate_match_score.argtypes = [ctypes.c_int, ctypes.c_float, ctypes.c_int]
+    scoring_lib.calculate_match_score.restype = ctypes.c_float
+    print("✅ Librairie C chargée avec succès")
 
 def load_data():
     with open(DATA_PATH, "r", encoding="utf-8") as f:
