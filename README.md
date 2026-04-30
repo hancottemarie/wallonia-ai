@@ -54,3 +54,10 @@ Imagine que ton site est un jeu de LEGO.
     À quoi ça sert : On découpe l'interface en petits morceaux indépendants.
 
     Avantage : Si tu veux changer le design de toutes tes cartes de villes, tu ne modifies qu'un seul fichier (le composant Card), et tout le site se met à jour.
+23. ❓ C'est quoi Axios ?
+
+C'est un "client HTTP".
+
+    À quoi ça sert : C'est le messager qui va aller voir ton Backend Python (FastAPI) pour lui dire : "Hé, l'utilisateur veut un voyage 'Adventure' avec 100€ de budget, tu me donnes les résultats ?".
+
+    Pourquoi pas fetch (l'outil par défaut) ? Axios est plus robuste, gère mieux les erreurs et possède une syntaxe plus simple pour envoyer des données complexes.
