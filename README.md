@@ -65,4 +65,4 @@ Pourquoi pas fetch (l'outil par défaut) ? Axios est plus robuste, gère mieux l
 28. Deboggage de l'app car parfois meme resultat pour filtres differents qui peut venir de differentes choses:
  - front
  - back
- - 
+ - Donnees
