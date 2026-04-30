@@ -15,4 +15,4 @@ Etapes:
 2. transformer celui-ci e google sheet
 3. via make.com faire un scenario partant de mon google sheet->gemini pour transformer les infos en json ->google sheet pour noter resultat dans nouvelle colonne
 4. resultat mis dans /data/destinations.json
-
+prepa de l'environnement 
