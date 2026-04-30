@@ -68,5 +68,5 @@ Pourquoi pas fetch (l'outil par défaut) ? Axios est plus robuste, gère mieux l
  - Donnees
 29. etape 1: console log : /frontend/src/app.jsx fonction handleSearch. Print debug : "	console.log("Données envoyées au serveur :", formData);"
 quand dans navigateur f12 ->console-> on voit changement budget donc c'est du cote python le probleme.
-30. main.py: peut etre base_score est de 5
+30. main.py: peut etre 2 causes base_score est de 5
 
