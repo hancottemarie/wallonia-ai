@@ -55,6 +55,7 @@ POURAUOI IMPORTANT: en React, l'application est un Arbre de composants App.jsx e
 25. e.preventDefault() Par défaut : En HTML, quand tu valides un formulaire, le navigateur essaie d'envoyer les données et de recharger la page.
 
 En React : On ne veut jamais que la page se recharge (on appelle ça une Single Page Application). e.preventDefault() dit au navigateur : "Stop, ne recharge pas, je vais gérer l'envoi moi-même avec JavaScript".
+
 26. ❓ C'est quoi Axios ?
 
 C'est un "client HTTP".
