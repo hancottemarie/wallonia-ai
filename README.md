@@ -67,5 +67,5 @@ Pourquoi pas fetch (l'outil par défaut) ? Axios est plus robuste, gère mieux l
  - back
  - Donnees
 29. etape 1: console log : /frontend/src/app.jsx fonction handleSearch. Print debug : "	console.log("Données envoyées au serveur :", formData);"
-quand dans navigateur f12 ->console
+quand dans navigateur f12 ->console-
 
