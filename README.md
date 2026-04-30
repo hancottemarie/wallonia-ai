@@ -25,4 +25,4 @@ pip freeze > requirements.txt
 10. utilisation de pydantic et modif du main.py pour les recommandation pour le user en fonction de ses preferences. avec ordre de criteres vibe en priorite puis budget puis province mais optionnel -- ajoutre aue si score min est atteint (optionnel) et Enfin un tri par ordere decroissant. et renvoi du top 5.
 11. test via backend->act venv->"uvicorn main:app --reload" ensuite aller sur url 127.0.0.1
 12. dans core-engine.scoring.c creations d'une fonction qui calcule un score final pondere. Fonction qui sera appelee par python elle prend des multiplicateurs et renvoie un score final.
-13. afin que le code soit utilisable je transfoirme le .c en bibliotheque partagee .
+13. afin que le code soit utilisable je transfoirme le .c en bibliotheque partagee .so 
