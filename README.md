@@ -28,4 +28,4 @@ pip freeze > requirements.txt
 13. afin que le code soit utilisable je transfoirme le .c en bibliotheque partagee .so
 14. modif de main.py pour appeler la bibliotheque ctypes pour appeler la fonction c :  Chargement de la librairie C, Adapte l'extension .so ou .dll selon ton OS, Définition des types d'entrée et de sortie pour la fonction C. APPEL AU MOTEUR EN C, Imaginons un multiplicateur de 1.2 et une pénalité de 1
 15. Changement dans le main.py AVANT : os.path.join("..", ) Maintenant on utilise l'objet path qui gere mieux les /, \ peut importe l'env os.
-16.
+16. 
