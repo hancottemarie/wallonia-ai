@@ -70,5 +70,5 @@ Pourquoi pas fetch (l'outil par défaut) ? Axios est plus robuste, gère mieux l
 quand dans navigateur f12 ->console-> on voit changement budget donc c'est du cote python le probleme.
 30. main.py: peut etre 2 causes ou alors dans le main.py le base_score des villes est de 5 donc pour contre balancer avec culture c'est compliquer.
 ou alors le filtrage n'est pas strict je calcule un score mais trop peu de villes differentes dans mon json.
-31. changements operes : dans et le main.py et dans destinations.json pour : avoir plus de differences au niveau du budget entre les attractions et 
+31. changements operes : dans et le main.py et dans destinations.json pour : avoir plus de differences au niveau du budget entre les attractions et dans main.py 
 
