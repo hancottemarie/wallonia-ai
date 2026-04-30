@@ -29,4 +29,5 @@ pip freeze > requirements.txt
 14. modif de main.py pour appeler la bibliotheque ctypes pour appeler la fonction c :  Chargement de la librairie C, Adapte l'extension .so ou .dll selon ton OS, Définition des types d'entrée et de sortie pour la fonction C. APPEL AU MOTEUR EN C, Imaginons un multiplicateur de 1.2 et une pénalité de 1
 15. Changement dans le main.py AVANT : os.path.join("..", ) Maintenant on utilise l'objet path qui gere mieux les /, \ peut importe l'env os.
 16. ajout egalement d'une securite si scoring_lib existe avant de l'utiliser pour pas crasher tt le serveux si oublie de compilation de la lib C.
-17. ajout API-Key de groq pour modele llama3. utilisation au get pour limiter usage 
+17. ajout API-Key de groq pour modele llama3. utilisation au get pour limiter usage et activation que a la fin de main.py
+18. 
