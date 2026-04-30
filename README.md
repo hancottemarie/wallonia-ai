@@ -32,7 +32,7 @@ pip freeze > requirements.txt
 17. ajout API-Key de groq pour modele llama3. utilisation seulement sur top 3 pour limiter usage API et activation que a la fin de main.py
 18. dans main.py chargement de la lib C avec protection si impossible de charger fallback sur python
 19. A present API repond avec du JSON contenant scores calcules en C + descriptions generees par une IA. Utilisation de Vite.js(pour la rpidite). Tailwind CSS(design) Lucide-react(Icones)
-20. avec vite.jsquoi ça sert : Vite.js est un "build tool" (un outil de construction). Son rôle est de préparer ton code pour qu'il soit compréhensible par le navigateur.
+20. avec vite.js quoi ça sert : Vite.js est un "build tool" (un outil de construction). Son rôle est de préparer ton code pour qu'il soit compréhensible par le navigateur.
 Serveur lance : sur http://localhost:5173/
 Maintenant Backend(python/C) et frontend(React)pret a l'emploi
 21. install tailwind C'est un framework CSS "utility-first".
