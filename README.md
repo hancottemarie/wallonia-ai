@@ -86,4 +86,4 @@ Le concept : Quand l'IA trouve une ville, un marqueur avec l'icône de la catég
 - Real-time Weather : Utiliser une API météo pour afficher le temps actuel dans les villes suggérées.
 34. Ajout d'images supplementaires(TODO :images specifiques pour chaque destinations dans destinations.json) et icone sur la carte(TODO :a ammeliorer+ TODO: sur carte coffre-fort sur carte) plus random dans le main.py pour des % differents.
 35. ajout de barre de recherche en temps reel via app.jcx et le main.py STILL TO FIX
-
+36. 
