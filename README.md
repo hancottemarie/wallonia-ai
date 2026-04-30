@@ -34,7 +34,7 @@ pip freeze > requirements.txt
 19. A present API repond avec du JSON contenant scores calcules en C + descriptions generees par une IA. Utilisation de Vite.js(pour la rpidite). Tailwind CSS(design) Lucide-react(Icones)
 20. avec vite.jsquoi ça sert : Vite.js est un "build tool" (un outil de construction). Son rôle est de préparer ton code pour qu'il soit compréhensible par le navigateur.
 Serveur lance : sur http://localhost:5173/
-
+Maintenant 
 21. install tailwind C'est un framework CSS "utility-first".
 
     À quoi ça sert : Au lieu d'écrire de longs fichiers .css séparés, tu écris des classes directement dans ton HTML (ex: class="text-blue-500 font-bold").
