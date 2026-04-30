@@ -50,7 +50,7 @@ Imagine que ton site est un jeu de LEGO.
     Avantage : Si tu veux changer le design de toutes tes cartes de villes, tu ne modifies qu'un seul fichier (le composant Card), et tout le site se met à jour.
 23. JSX: jsvascript xml : extension de syntaxe pour javascript melange de java +html. POURQUOI? : ecrit la structure de mon interface (html). en gros on passe de React.createElement('h1', {className: 'title'}, 'Hello') ------a------<h1 className="title">Hello</h1>
 Vite a un role : chrome et safari ne savent pas voir jsx donc vite le transforme en javascriptpur pour la comprehension du navigateur.
-24. export de Travelfor
+24. export de TravelFrom
 25. ❓ C'est quoi Axios ?
 
 C'est un "client HTTP".
