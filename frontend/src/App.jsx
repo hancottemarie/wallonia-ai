@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import TravelForm from './components/TravelForm'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
