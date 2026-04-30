@@ -69,5 +69,5 @@ Pourquoi pas fetch (l'outil par défaut) ? Axios est plus robuste, gère mieux l
 29. etape 1: console log : /frontend/src/app.jsx fonction handleSearch. Print debug : "	console.log("Données envoyées au serveur :", formData);"
 quand dans navigateur f12 ->console-> on voit changement budget donc c'est du cote python le probleme.
 30. main.py: peut etre 2 causes ou alors dans le main.py le base_score des villes est de 5 donc pour contre balancer avec culture c'est compliquer.
-ou alors le filtrage n'est pas strict je calcule un score mais trop peu de villes differentes dans mon json
+ou alors le filtrage n'est pas strict je calcule un score mais trop peu de villes differentes dans mon json.
 
