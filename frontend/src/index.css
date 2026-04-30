@@ -1,2 +1,9 @@
 @import "tailwindcss";
 @import "leaflet/dist/leaflet.css";
+.dark .leaflet-tile {
+    filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+.dark .leaflet-container {
+    background: #020617; /* Slate 950 pour matcher ton fond */
+}
