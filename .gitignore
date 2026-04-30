@@ -220,4 +220,4 @@ __marimo__/
 # fichier auto-commit
 commit.sh
 #.env
-
+.env
