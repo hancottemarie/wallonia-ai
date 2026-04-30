@@ -74,33 +74,33 @@ def recommend_destinations(prefs: UserPreferences):
     data = load_data()
     scored_destinations = []
 
-    for dest in data:
-        base_score = 0
+for dest in data:
 
-        # CORRECTION : On utilise .get() pour éviter les KeyError
-        # On compare 'category' du JSON avec 'vibe' envoyé par le front
-        dest_category = dest.get("category", "").lower()
-        if dest_category == prefs.vibe.lower():
-            base_score += 10
+        if dest.get("budget_index", 1) > prefs.budget_max:
+            continue
 
-        # CORRECTION : On utilise 'budget_index' (vu dans ton JSON)
-        if dest.get("budget_index", 99) <= prefs.budget_max:
-            base_score += 5
+        base_score = 1
 
-        # Calcul du score final (C ou Python fallback)
+        dest_cat = str(dest.get("category", "")).strip().lower()
+        pref_vibe = str(prefs.vibe).strip().lower()
+
+        if dest_cat == pref_vibe:
+            base_score += 15
+        elif dest_cat != "":
+            base_score += 2
+
         if scoring_lib:
-            final_score = scoring_lib.calculate_match_score(base_score, 1.2, 1)
+            final_score = scoring_lib.calculate_match_score(int(base_score), 1.2, 1)
         else:
             final_score = base_score * 1.2
 
         new_dest = dest.copy()
-        new_dest["match_score"] = round(final_score, 2)
+
+        new_dest["match_score"] = round(final_score, 1)
         scored_destinations.append(new_dest)
 
-    # Tri par score et sélection du Top 3
     top_results = sorted(scored_destinations, key=lambda x: x["match_score"], reverse=True)[:3]
 
-    # Ajout de l'IA pour les gagnants
     for res in top_results:
         res["ai_description"] = get_ai_recommendation(res["name"], res.get("category", "Culture"))
 
