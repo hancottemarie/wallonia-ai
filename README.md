@@ -71,3 +71,4 @@ quand dans navigateur f12 ->console-> on voit changement budget donc c'est du co
 30. main.py: peut etre 2 causes ou alors dans le main.py le base_score des villes est de 5 donc pour contre balancer avec culture c'est compliquer.
 ou alors le filtrage n'est pas strict je calcule un score mais trop peu de villes differentes dans mon json.
 
+
