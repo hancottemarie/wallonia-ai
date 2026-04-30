@@ -73,5 +73,5 @@ ou alors le filtrage n'est pas strict je calcule un score mais trop peu de ville
 31. changements operes : dans et le main.py et dans destinations.json pour : avoir plus de differences au niveau du budget entre les attractions et dans main.py filtres plus strict egalement dans la boucle for.
 32. Rajout de features:
 - IA conversationelle (UX de Chat) qui si;ule une ia qui reflechit et nous repond (petit texte au dessus des cartes)
-- une carte interactive
+- une carte interactive :
 
