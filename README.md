@@ -20,3 +20,4 @@ prepa de l'environnement python
 6. pip install fastapi uvicorn # On sauvegarde les dépendances pour le futur recruteur
 pip freeze > requirements.txt
 7. creation du serveur dans main.py qui va charger automatiquement destinations.json
+
