@@ -26,7 +26,7 @@ function App() {
 	return (
 
 		<div className="min-h-screen bg-white dark:bg-slate-950 transition-colors duration-500">
-			< DarkModeToggle />
+			<DarkModeToggle />
 
 			<header className="text-center mb-10">
 				<h1 className="text-5xl font-black text-slate-900 dark:text-white tracking-tight transition-colors">

@@ -7,3 +7,7 @@
 .dark .leaflet-container {
     background: #020617; /* Slate 950 pour matcher ton fond */
 }
+body {
+  margin: 0;
+  padding: 0;
+}
