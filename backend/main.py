@@ -1,6 +1,7 @@
 import ctypes
 import os
 import json
+import random
 from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -48,7 +49,14 @@ def load_data():
 def get_ai_recommendation(city_name: str, category: str):
     """Génère une description via Llama 3"""
     try:
-        prompt = f"Expert Belgian travel guide. 2 short sentences for {city_name}, Wallonia. Category: {category}. Explain why it's better than crowded Bruges. Catchy English."
+        prompt = f"""
+Act as a luxury travel agent in Wallonia.
+The user wants a {category} trip.
+Give 2 sentences for {city_name}.
+Sentence 1: Why it's a hidden gem.
+Sentence 2: A specific local tip (a dish to eat or a street to see).
+Be witty and professional.
+"""
         chat_completion = client.chat.completions.create(
             messages=[{"role": "user", "content": prompt}],
             model="llama3-8b-8192",
@@ -78,28 +86,33 @@ def recommend_destinations(prefs: UserPreferences):
         if dest.get("budget_index", 1) > prefs.budget_max:
             continue
 
-        base_score = 5
+        base_score = 10 
 
-        dest_cat = str(dest.get("category", "")).strip().lower()
-        pref_vibe = str(prefs.vibe).strip().lower()
+        dest_cat = str(dest.get("category", "")).lower()
+        pref_vibe = str(prefs.vibe).lower()
 
-        if dest_cat == pref_vibe:
-            base_score += 60
-        else:
-            base_score += 10
+        culture_keywords = ["musée", "culture", "histoire", "château", "patrimoine"]
+        adventure_keywords = ["aventure", "sport", "nature", "randonnée", "escalade"]
+
+        if pref_vibe == "culture" and any(k in dest_cat for k in culture_keywords):
+            base_score += 50
+        elif pref_vibe == "adventure" and any(k in dest_cat for k in adventure_keywords):
+            base_score += 50
+        elif dest_cat == pref_vibe:
+            base_score += 50
+
+
+        for tag in dest.get("tags", []):
+            if tag.lower() == pref_vibe:
+                base_score += 10
+
         if scoring_lib:
-            try:
-                raw_score = scoring_lib.calculate_match_score(int(base_score), 1.1, 1)
-            except:
-                raw_score = base_score * 1.1
+            final_score = scoring_lib.calculate_match_score(int(base_score), 1.2, 1)
         else:
-            raw_score = base_score * 1.1
-
-
-        final_percentage = min(raw_score, 99.0)
+            final_score = base_score * 1.2
 
         new_dest = dest.copy()
-        new_dest["match_score"] = round(final_percentage, 1)
+        new_dest["match_score"] = round(min(final_score, 99.0), 1)
         scored_destinations.append(new_dest)
 
     top_results = sorted(scored_destinations, key=lambda x: x["match_score"], reverse=True)[:3]
