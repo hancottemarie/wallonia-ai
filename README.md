@@ -31,4 +31,4 @@ pip freeze > requirements.txt
 16. ajout egalement d'une securite si scoring_lib existe avant de l'utiliser pour pas crasher tt le serveux si oublie de compilation de la lib C.
 17. ajout API-Key de groq pour modele llama3. utilisation au get pour limiter usage et activation que a la fin de main.py
 18. dans main.py chargement de la lib C avec protection si impossible de charger switch sur python
-
+19.
