@@ -36,23 +36,15 @@ def recommend_destinations(prefs: UserPreferences):
     scored_destinations = []
 
     for dest in data:
-        score = 0
+        base_score = 0
+        if dest["vibe"].lower() == prefs.vibe.lower(): base_score += 10
+        if dest["budget_level"] <= prefs.budget_max: base_score += 5
 
-        if dest["vibe"].lower() == prefs.vibe.lower():
-            score += 10
 
-        if dest["budget_level"] <= prefs.budget_max:
-            score += 5
-            if dest["budget_level"] == prefs.budget_max:
-                score += 2
-
-        if prefs.province and dest["province"].lower() == prefs.province.lower():
-            score += 8
+        final_score = scoring_lib.calculate_match_score(base_score, 1.2, 1)
 
         dest_with_score = dest.copy()
-        dest_with_score["match_score"] = score
+        dest_with_score["match_score"] = final_score
         scored_destinations.append(dest_with_score)
 
-    recommendations = sorted(scored_destinations, key=lambda x: x["match_score"], reverse=True)
-
-    return recommendations[:5]
+    return sorted(scored_destinations, key=lambda x: x["match_score"], reverse=True)[:5]
