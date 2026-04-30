@@ -26,4 +26,4 @@ pip freeze > requirements.txt
 11. test via backend->act venv->"uvicorn main:app --reload" ensuite aller sur url 127.0.0.1
 12. dans core-engine.scoring.c creations d'une fonction qui calcule un score final pondere. Fonction qui sera appelee par python elle prend des multiplicateurs et renvoie un score final.
 13. afin que le code soit utilisable je transfoirme le .c en bibliotheque partagee .so
-14. modif de main.py pour 
+14. modif de main.py pour appeler la 
