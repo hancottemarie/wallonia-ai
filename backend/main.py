@@ -1,11 +1,18 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
+from typing import List, Optional
 import json
 import os
 
 app = FastAPI(title="Wallonia AI API")
 
-# Chemin vers tes données
 DATA_PATH = os.path.join("..", "data", "destinations.json")
+
+# Modèle de données pour la requête utilisateur
+class UserPreferences(BaseModel):
+    vibe: str           # ex: "Adventure", "Chill"
+    budget_max: int     # 1, 2 ou 3
+    province: Optional[str] = None
 
 def load_data():
     with open(DATA_PATH, "r", encoding="utf-8") as f:
@@ -13,15 +20,36 @@ def load_data():
 
 @app.get("/")
 def home():
-    return {"message": "Welcome to Wallonia.ai API", "status": "running"}
+    return {"status": "Wallonia.ai Engine Online"}
 
-@app.get("/destinations")
-def get_all_destinations():
+@app.post("/recommend")
+def recommend_destinations(prefs: UserPreferences):
     data = load_data()
-    return data
+    scored_destinations = []
 
-@app.get("/destinations/{dest_id}")
-def get_one_destination(dest_id: int):
-    data = load_data()
-    destination = next((item for item in data if item["id"] == dest_id), None)
-    return destination or {"error": "Destination not found"}
+    for dest in data:
+        score = 0
+
+        # 1. Match sur la Vibe (Critère majeur)
+        if dest["vibe"].lower() == prefs.vibe.lower():
+            score += 10
+
+        # 2. Match sur le Budget
+        if dest["budget_level"] <= prefs.budget_max:
+            score += 5
+            if dest["budget_level"] == prefs.budget_max:
+                score += 2  # Bonus si c'est exactement le budget
+
+        # 3. Match sur la Province (Optionnel)
+        if prefs.province and dest["province"].lower() == prefs.province.lower():
+            score += 8
+
+        # On n'ajoute que si le score minimum est atteint (optionnel)
+        dest_with_score = dest.copy()
+        dest_with_score["match_score"] = score
+        scored_destinations.append(dest_with_score)
+
+    # Tri par score décroissant
+    recommendations = sorted(scored_destinations, key=lambda x: x["match_score"], reverse=True)
+
+    return recommendations[:5] # On renvoie le Top 5
