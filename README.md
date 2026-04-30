@@ -37,13 +37,7 @@ Serveur lance : sur http://localhost:5173/
 Maintenant Backend(python/C) et frontend(React)pret a l'emploi
 21. install tailwind C'est un framework CSS "utility-first".
     À quoi ça sert : Au lieu d'écrire de longs fichiers .css séparés, tu écris des classes directement dans ton HTML (ex: class="text-blue-500 font-bold").
-    Pourquoi on l'utilise :
 
-        C'est ultra rapide pour créer des interfaces professionnelles.
-
-        Ça évite d'avoir des fichiers CSS géants et illisibles.
-
-        C'est le framework le plus demandé en entreprise aujourd'hui.
 22. Dans le dossier frontend/src, on va créer un dossier nommé components.
 ❓ C'est quoi un Composant en React ?
 
