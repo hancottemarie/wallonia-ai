@@ -52,7 +52,7 @@ Imagine que ton site est un jeu de LEGO.
 Vite a un role : chrome et safari ne savent pas voir jsx donc vite le transforme en javascriptpur pour la comprehension du navigateur.
 24. export de TravelForm.jsx permet a React de comprendre que on veut utiliser la brique qu'on a creer donc export dans travelform et import dans App.jsx
 POURAUOI IMPORTANT: en React, l'application est un Arbre de composants App.jsx est la racine tandis que par ex TravelForm est plutot comme une branche.
-25. e.prevent
+25. e.preventDefault
 26. ❓ C'est quoi Axios ?
 
 C'est un "client HTTP".
