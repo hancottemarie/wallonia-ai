@@ -27,4 +27,4 @@ pip freeze > requirements.txt
 12. dans core-engine.scoring.c creations d'une fonction qui calcule un score final pondere. Fonction qui sera appelee par python elle prend des multiplicateurs et renvoie un score final.
 13. afin que le code soit utilisable je transfoirme le .c en bibliotheque partagee .so
 14. modif de main.py pour appeler la bibliotheque ctypes pour appeler la fonction c :  Chargement de la librairie C, Adapte l'extension .so ou .dll selon ton OS, Définition des types d'entrée et de sortie pour la fonction C. APPEL AU MOTEUR EN C, Imaginons un multiplicateur de 1.2 et une pénalité de 1
-15. Changement dans le main.py AVANT : os.path.join("..", )
+15. Changement dans le main.py AVANT : os.path.join("..", ) Maintena
