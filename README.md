@@ -62,4 +62,4 @@ C'est un "client HTTP": À quoi ça sert : C'est le messager qui va aller voir t
 
 Pourquoi pas fetch (l'outil par défaut) ? Axios est plus robuste, gère mieux les erreurs et possède une syntaxe plus simple pour envoyer des données complexes.
 27. amelioration dans /frontend/src/app.jsx pour avoir meilleure interaction avec utilisateur.
-28. Deboggage de l'app car parfois meme resultat pour filtres differents 
+28. Deboggage de l'app car parfois meme resultat pour filtres differents qui puet venir de dif
