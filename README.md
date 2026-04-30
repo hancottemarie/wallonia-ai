@@ -36,7 +36,7 @@ pip freeze > requirements.txt
 Serveur lance : sur http://localhost:5173/
 Maintenant Backend(python/C) et frontend(React)pret a l'emploi
 21. install tailwind C'est un framework CSS "utility-first".
-    À quoi ça sert : Au lieu d'écrire de longs fichiers .css séparés, tu écris des classes directement dans ton HTML (ex: class="text-blue-500 font-bold"). 
+    À quoi ça sert : Au lieu d'écrire de longs fichiers .css séparés, tu écris des classes directement dans ton HTML (ex: class="text-blue-500 font-bold").
 
 22. Dans le dossier frontend/src, on va créer un dossier nommé components.
 ❓ C'est quoi un Composant en React ?
@@ -48,7 +48,7 @@ Imagine que ton site est un jeu de LEGO.
     À quoi ça sert : On découpe l'interface en petits morceaux indépendants.
 
     Avantage : Si tu veux changer le design de toutes tes cartes de villes, tu ne modifies qu'un seul fichier (le composant Card), et tout le site se met à jour.
-23. ❓ C'est quoi Axios ?
+24. ❓ C'est quoi Axios ?
 
 C'est un "client HTTP".
 
