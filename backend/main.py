@@ -1,8 +1,17 @@
+import ctypes
+from pathlib import Path
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List, Optional
 import json
 import os
+
+
+lib_path = Path("../core-engine/scoring.so").absolute()
+scoring_lib = ctypes.CDLL(str(lib_path))
+
+scoring_lib.calculate_match_score.argtypes = [ctypes.c_int, ctypes.c_float, ctypes.c_int]
+scoring_lib.calculate_match_score.restype = ctypes.c_float
 
 app = FastAPI(title="Wallonia AI API")
 
