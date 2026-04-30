@@ -44,3 +44,13 @@ pip freeze > requirements.txt
         Ça évite d'avoir des fichiers CSS géants et illisibles.
 
         C'est le framework le plus demandé en entreprise aujourd'hui.
+22. Dans le dossier frontend/src, on va créer un dossier nommé components.
+❓ C'est quoi un Composant en React ?
+
+Imagine que ton site est un jeu de LEGO.
+
+    Un composant est une brique (ex: un bouton, une barre de recherche, une carte de ville).
+
+    À quoi ça sert : On découpe l'interface en petits morceaux indépendants.
+
+    Avantage : Si tu veux changer le design de toutes tes cartes de villes, tu ne modifies qu'un seul fichier (le composant Card), et tout le site se met à jour.
