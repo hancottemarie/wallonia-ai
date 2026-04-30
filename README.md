@@ -76,5 +76,11 @@ ou alors le filtrage n'est pas strict je calcule un score mais trop peu de ville
 - une carte interactive : On va utiliser React Leaflet (une bibliothèque gratuite et ultra-légère). Elle permet d'afficher une carte OpenStreetMap avec des marqueurs personnalisés.
 
 Le concept : Quand l'IA trouve une ville, un marqueur avec l'icône de la catégorie (ex: un monument pour "Culture") apparaît sur la carte de la Wallonie.
-33. Features complementaires : 
+33. Features complementaires :
+Mode Sombre (Dark Mode) : Un classique, mais indispensable pour le confort.
 
+Filtrage par Province : Ajouter un sélecteur pour limiter la recherche à Namur, Liège, etc.
+
+Export PDF du Roadtrip : Un bouton pour générer un petit itinéraire avec les résultats.
+
+Real-time Weather : Utiliser une API météo pour afficher le temps actuel dans les villes suggérées.
