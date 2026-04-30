@@ -79,7 +79,7 @@ Le concept : Quand l'IA trouve une ville, un marqueur avec l'icône de la catég
 33. Features complementaires :
 - Mode Sombre (Dark Mode) : Un classique, mais indispensable pour le confort.
 
-Filtrage par Province : Ajouter un sélecteur pour limiter la recherche à Namur, Liège, etc.
+- Filtrage par Province : Ajouter un sélecteur pour limiter la recherche à Namur, Liège, etc.
 
 Export PDF du Roadtrip : Un bouton pour générer un petit itinéraire avec les résultats.
 
