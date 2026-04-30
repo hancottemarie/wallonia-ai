@@ -83,12 +83,15 @@ def recommend_destinations(prefs: UserPreferences):
     data = load_data()
     scored_destinations = []
 
-    for dest in data:
+    # On définit la query de recherche (nettoyée)
+    search_term = prefs.search_query.lower().strip() if prefs.search_query else ""
 
-	if query and query not in dest.get("name", "").lower():
+    for dest in data:
+        # --- NOUVEAU : FILTRE DE RECHERCHE PAR NOM ---
+        if search_term and search_term not in dest.get("name", "").lower():
             continue
 
-		# 1. FILTRE BUDGET : Radical et efficace
+        # 1. FILTRE BUDGET : Radical et efficace
         if dest.get("budget_index", 1) > prefs.budget_max:
             continue
 
@@ -108,18 +111,21 @@ def recommend_destinations(prefs: UserPreferences):
         elif dest_cat == pref_vibe:
             base_score += 50
 
-        # 3. BONUS TAGS (Sorti de la boucle de calcul)
+        # 3. BONUS TAGS
         for tag in dest.get("tags", []):
             if tag.lower() == pref_vibe:
                 base_score += 10
 
-        # 4. CALCUL DU SCORE (Une seule fois après les bonus)
+        # 4. CALCUL DU SCORE (C ou Python)
         if scoring_lib:
-            raw_score = scoring_lib.calculate_match_score(int(base_score), 1.1, 1)
+            try:
+                raw_score = scoring_lib.calculate_match_score(int(base_score), 1.1, 1)
+            except:
+                raw_score = base_score * 1.1
         else:
             raw_score = base_score * 1.1
 
-        # 5. VARIATION "IA-LIKE"
+        # 5. VARIATION "IA-LIKE" (Pour le style)
         variation = random.uniform(0, 5)
         final_percentage = min(raw_score + variation, 99.9)
 
@@ -127,7 +133,7 @@ def recommend_destinations(prefs: UserPreferences):
         new_dest["match_score"] = round(final_percentage, 1)
         scored_destinations.append(new_dest)
 
-    # 6. TRI ET SÉLECTION
+    # 6. TRI ET SÉLECTION DU TOP 3
     top_results = sorted(scored_destinations, key=lambda x: x["match_score"], reverse=True)[:3]
 
     for res in top_results:
