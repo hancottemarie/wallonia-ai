@@ -74,29 +74,32 @@ def recommend_destinations(prefs: UserPreferences):
     data = load_data()
     scored_destinations = []
 
-for dest in data:
-
+    for dest in data:
         if dest.get("budget_index", 1) > prefs.budget_max:
             continue
 
-        base_score = 1
+        base_score = 5
 
         dest_cat = str(dest.get("category", "")).strip().lower()
         pref_vibe = str(prefs.vibe).strip().lower()
 
         if dest_cat == pref_vibe:
-            base_score += 15
-        elif dest_cat != "":
-            base_score += 2
-
-        if scoring_lib:
-            final_score = scoring_lib.calculate_match_score(int(base_score), 1.2, 1)
+            base_score += 60
         else:
-            final_score = base_score * 1.2
+            base_score += 10
+        if scoring_lib:
+            try:
+                raw_score = scoring_lib.calculate_match_score(int(base_score), 1.1, 1)
+            except:
+                raw_score = base_score * 1.1
+        else:
+            raw_score = base_score * 1.1
+
+
+        final_percentage = min(raw_score, 99.0)
 
         new_dest = dest.copy()
-
-        new_dest["match_score"] = round(final_score, 1)
+        new_dest["match_score"] = round(final_percentage, 1)
         scored_destinations.append(new_dest)
 
     top_results = sorted(scored_destinations, key=lambda x: x["match_score"], reverse=True)[:3]
