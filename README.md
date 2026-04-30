@@ -24,4 +24,4 @@ pip freeze > requirements.txt
 9. Rajout d'une "conscience" dans le but de : "Algorithme calcule un score de pertinence pour chaque destination en fonction des poids accordés aux préférences utilisateur."
 10. utilisation de pydantic et modif du main.py pour les recommandation pour le user en fonction de ses preferences. avec ordre de criteres vibe en priorite puis budget puis province mais optionnel -- ajoutre aue si score min est atteint (optionnel) et Enfin un tri par ordere decroissant. et renvoi du top 5.
 11. test via backend->act venv->"uvicorn main:app --reload" ensuite aller sur url 127.0.0.1
-12. 
+12. dans 
