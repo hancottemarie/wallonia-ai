@@ -61,4 +61,4 @@ En React : On ne veut jamais que la page se recharge (on appelle ça une Single 
 C'est un "client HTTP": À quoi ça sert : C'est le messager qui va aller voir ton Backend Python (FastAPI) pour lui dire : "Hé, l'utilisateur veut un voyage 'Adventure' avec 100€ de budget, tu me donnes les résultats ?".
 
 Pourquoi pas fetch (l'outil par défaut) ? Axios est plus robuste, gère mieux les erreurs et possède une syntaxe plus simple pour envoyer des données complexes.
-27. amelioration dans /frontend/src/app.jsx
+27. amelioration dans /frontend/src/app.jsx pour 
