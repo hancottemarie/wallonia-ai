@@ -73,5 +73,7 @@ ou alors le filtrage n'est pas strict je calcule un score mais trop peu de ville
 31. changements operes : dans et le main.py et dans destinations.json pour : avoir plus de differences au niveau du budget entre les attractions et dans main.py filtres plus strict egalement dans la boucle for.
 32. Rajout de features:
 - IA conversationelle (UX de Chat) qui si;ule une ia qui reflechit et nous repond (petit texte au dessus des cartes)
-- une carte interactive :
+- une carte interactive : On va utiliser React Leaflet (une bibliothèque gratuite et ultra-légère). Elle permet d'afficher une carte OpenStreetMap avec des marqueurs personnalisés.
+
+Le concept : Quand l'IA trouve une ville, un marqueur avec l'icône de la catégorie (ex: un monument pour "Culture") apparaît sur la carte de la Wallonie.
 
