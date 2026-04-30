@@ -66,4 +66,4 @@ Pourquoi pas fetch (l'outil par défaut) ? Axios est plus robuste, gère mieux l
  - front
  - back
  - Donnees
-29. etape 1: console log : /frontend/src/app.jsx fonction handleSearch. 
+29. etape 1: console log : /frontend/src/app.jsx fonction handleSearch. Print 
