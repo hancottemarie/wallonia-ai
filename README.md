@@ -11,4 +11,5 @@ usage of :
 Limit : Tape 1 pour ton premier test réel. Une fois que la première ligne est validée dans ton Google Sheet, tu reviendras ici pour mettre 180.
 -----
 Etapes:
-1. via le site webscraper.io scrap des attractions 
+1. via le site webscraper.io scrap des attractions vers fichier csv
+
