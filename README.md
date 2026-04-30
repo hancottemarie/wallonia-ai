@@ -33,4 +33,4 @@ pip freeze > requirements.txt
 18. dans main.py chargement de la lib C avec protection si impossible de charger fallback sur python
 19. A present API repond avec du JSON contenant scores calcules en C + descriptions generees par une IA. Utilisation de Vite.js(pour la rpidite). Tailwind CSS(design) Lucide-react(Icones)
 20. avec vite.jsquoi ça sert : Vite.js est un "build tool" (un outil de construction). Son rôle est de préparer ton code pour qu'il soit compréhensible par le navigateur.
-
+21. install tailwind 
