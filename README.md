@@ -85,4 +85,4 @@ Export PDF du Roadtrip : Un bouton pour générer un petit itinéraire avec les 
 
 Real-time Weather : Utiliser une API météo pour afficher le temps actuel dans les villes suggérées.
 34. Ajout d'images supplementaires(TODO :images specifiques pour chaque destinations dans destinations.json) et icone sur la carte(TODO :a ammeliorer+ TODO: sur carte coffre-fort sur carte) plus random dans le main.py pour des % differents.
-35. ajout de barre de recherche en temps reel via app.jcx et 
+35. ajout de barre de recherche en temps reel via app.jcx et le main.py 
