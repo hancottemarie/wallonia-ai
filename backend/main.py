@@ -8,10 +8,9 @@ app = FastAPI(title="Wallonia AI API")
 
 DATA_PATH = os.path.join("..", "data", "destinations.json")
 
-# Modèle de données pour la requête utilisateur
 class UserPreferences(BaseModel):
-    vibe: str           # ex: "Adventure", "Chill"
-    budget_max: int     # 1, 2 ou 3
+    vibe: str
+    budget_max: int
     province: Optional[str] = None
 
 def load_data():
@@ -30,26 +29,21 @@ def recommend_destinations(prefs: UserPreferences):
     for dest in data:
         score = 0
 
-        # 1. Match sur la Vibe (Critère majeur)
         if dest["vibe"].lower() == prefs.vibe.lower():
             score += 10
 
-        # 2. Match sur le Budget
         if dest["budget_level"] <= prefs.budget_max:
             score += 5
             if dest["budget_level"] == prefs.budget_max:
-                score += 2  # Bonus si c'est exactement le budget
+                score += 2
 
-        # 3. Match sur la Province (Optionnel)
         if prefs.province and dest["province"].lower() == prefs.province.lower():
             score += 8
 
-        # On n'ajoute que si le score minimum est atteint (optionnel)
         dest_with_score = dest.copy()
         dest_with_score["match_score"] = score
         scored_destinations.append(dest_with_score)
 
-    # Tri par score décroissant
     recommendations = sorted(scored_destinations, key=lambda x: x["match_score"], reverse=True)
 
-    return recommendations[:5] # On renvoie le Top 5
+    return recommendations[:5]
