@@ -17,4 +17,4 @@ Etapes:
 4. resultat mis dans /data/destinations.json
 prepa de l'environnement python
 5. dans backend python -m venv venv et activer pour bosser proprement
-6.
+6. 
