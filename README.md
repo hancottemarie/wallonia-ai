@@ -48,7 +48,7 @@ Imagine que ton site est un jeu de LEGO.
     À quoi ça sert : On découpe l'interface en petits morceaux indépendants.
 
     Avantage : Si tu veux changer le design de toutes tes cartes de villes, tu ne modifies qu'un seul fichier (le composant Card), et tout le site se met à jour.
-23. JSX: jsvascript xml
+23. JSX: jsvascript xml 
 24. ❓ C'est quoi Axios ?
 
 C'est un "client HTTP".
