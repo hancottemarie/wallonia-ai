@@ -21,4 +21,4 @@ prepa de l'environnement python
 pip freeze > requirements.txt
 7. creation du serveur dans main.py qui va charger automatiquement destinations.json
 8. pre-vue dispo deja sur : http://127.0.0.1:8000/destinations ou http://127.0.0.1:8000/docs
-9. Rajout 
+9. Rajout d'une "conscience" 
