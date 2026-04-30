@@ -12,4 +12,5 @@ Limit : Tape 1 pour ton premier test réel. Une fois que la première ligne est 
 -----
 Etapes:
 1. via le site webscraper.io scrap des attractions vers fichier csv
-2. 
+2. transformer celui-ci e google sheet
+
