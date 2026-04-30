@@ -77,3 +77,4 @@ ou alors le filtrage n'est pas strict je calcule un score mais trop peu de ville
 
 Le concept : Quand l'IA trouve une ville, un marqueur avec l'icône de la catégorie (ex: un monument pour "Culture") apparaît sur la carte de la Wallonie.
 
+
