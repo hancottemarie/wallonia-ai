@@ -19,3 +19,4 @@ prepa de l'environnement python
 5. dans backend python -m venv venv et activer pour bosser proprement
 6. pip install fastapi uvicorn # On sauvegarde les dépendances pour le futur recruteur
 pip freeze > requirements.txt
+7. creation 
