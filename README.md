@@ -64,4 +64,4 @@ Pourquoi pas fetch (l'outil par défaut) ? Axios est plus robuste, gère mieux l
 27. amelioration dans /frontend/src/app.jsx pour avoir meilleure interaction avec utilisateur.
 28. Deboggage de l'app car parfois meme resultat pour filtres differents qui peut venir de differentes choses:
  - front
- - 
+ - back - 
