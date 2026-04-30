@@ -8,17 +8,18 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   const handleSearch = async (formData) => {
-    setLoading(true);
-    try {
-      const response = await axios.post('http://127.0.0.1:8000/recommend', formData);
-      setResults(response.data);
-    } catch (error) {
-      console.error("Erreur backend :", error);
-      alert("Lance ton serveur Python !");
-    } finally {
-      setLoading(false);
-    }
-  };
+	setLoading(true);
+	try {
+		// On fusionne les données du formulaire avec la barre de recherche
+		const payload = { ...formData, search_query: searchQuery };
+		const response = await axios.post('http://127.0.0.1:8000/recommend', payload);
+		setResults(response.data);
+	} catch (error) {
+		console.error(error);
+	} finally {
+		setLoading(false);
+	}
+};
 
   return (
     <div className="min-h-screen bg-slate-50 py-12 font-sans">
@@ -28,6 +29,17 @@ function App() {
         </h1>
         <p className="text-slate-500 font-medium mt-2">Expert AI travel recommendations</p>
       </header>
+
+	<div className="max-w-md mx-auto mb-6 relative">
+		<input
+			type="text"
+			placeholder="Chercher une ville (ex: Dinant, Spa...)"
+			className="w-full px-6 py-4 rounded-2xl border-none shadow-lg focus:ring-2 focus:ring-blue-500 text-slate-700"
+			value={searchQuery}
+			onChange={(e) => setSearchQuery(e.target.value)}
+		/>
+		<span className="absolute right-5 top-4 opacity-30 text-xl">🔍</span>
+	</div>
 
       <TravelForm onSearch={handleSearch} />
 

@@ -71,6 +71,7 @@ class UserPreferences(BaseModel):
     vibe: str
     budget_max: int
     province: Optional[str] = None
+    search_query: Optional[str] = ""
 
 # --- ROUTES ---
 @app.get("/")
@@ -83,7 +84,11 @@ def recommend_destinations(prefs: UserPreferences):
     scored_destinations = []
 
     for dest in data:
-        # 1. FILTRE BUDGET : Radical et efficace
+
+	if query and query not in dest.get("name", "").lower():
+            continue
+
+		# 1. FILTRE BUDGET : Radical et efficace
         if dest.get("budget_index", 1) > prefs.budget_max:
             continue
 
