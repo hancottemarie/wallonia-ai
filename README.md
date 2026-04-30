@@ -84,4 +84,4 @@ Filtrage par Province : Ajouter un sélecteur pour limiter la recherche à Namur
 Export PDF du Roadtrip : Un bouton pour générer un petit itinéraire avec les résultats.
 
 Real-time Weather : Utiliser une API météo pour afficher le temps actuel dans les villes suggérées.
-34. 
+34. Ajour
