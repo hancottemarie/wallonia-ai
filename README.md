@@ -33,13 +33,7 @@ pip freeze > requirements.txt
 18. dans main.py chargement de la lib C avec protection si impossible de charger fallback sur python
 19. A present API repond avec du JSON contenant scores calcules en C + descriptions generees par une IA. Utilisation de Vite.js(pour la rpidite). Tailwind CSS(design) Lucide-react(Icones)
 20. avec vite.jsquoi ça sert : Vite.js est un "build tool" (un outil de construction). Son rôle est de préparer ton code pour qu'il soit compréhensible par le navigateur.
-Serveur lance : ❓ C'est quoi Axios ?
-
-C'est un "client HTTP".
-
-    À quoi ça sert : C'est le messager qui va aller voir ton Backend Python (FastAPI) pour lui dire : "Hé, l'utilisateur veut un voyage 'Adventure' avec 100€ de budget, tu me donnes les résultats ?".
-
-    Pourquoi pas fetch (l'outil par défaut) ? Axios est plus robuste, gère mieux les erreurs et possède une syntaxe plus simple pour envoyer des données complexes.
+Serveur lance : 
 21. install tailwind C'est un framework CSS "utility-first".
 
     À quoi ça sert : Au lieu d'écrire de longs fichiers .css séparés, tu écris des classes directement dans ton HTML (ex: class="text-blue-500 font-bold").
