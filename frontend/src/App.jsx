@@ -21,82 +21,98 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 py-12">
+    <div className="min-h-screen bg-slate-50 py-12 font-sans">
       <header className="text-center mb-10">
-        <h1 className="text-4xl font-black text-slate-900 tracking-tight">
+        <h1 className="text-5xl font-black text-slate-900 tracking-tight">
           Wallonia<span className="text-blue-600">.ai</span>
         </h1>
-        <p className="text-slate-500 font-medium">Expert AI travel recommendations</p>
+        <p className="text-slate-500 font-medium mt-2">Expert AI travel recommendations</p>
       </header>
 
       <TravelForm onSearch={handleSearch} />
 
-      {/* Zone d'affichage des résultats */}
       <main className="max-w-5xl mx-auto mt-12 px-4">
-
         {loading && (
-          <div className="text-center py-12 animate-pulse text-blue-600 font-bold">
-            L'IA explore la Wallonie pour vous... 🏰
+          <div className="text-center py-20">
+            <div className="animate-bounce text-4xl mb-4">🏰</div>
+            <div className="animate-pulse text-blue-600 font-bold text-xl">
+              L'IA explore la Wallonie pour vous...
+            </div>
           </div>
         )}
 
         {!loading && results.length > 0 && (
-          <>
-            {/* 1. MESSAGE DE L'IA (Le "Chat") */}
-            <div className="bg-blue-900 text-white p-6 rounded-2xl mb-8 shadow-lg border-l-8 border-blue-400 animate-in fade-in slide-in-from-bottom-4 duration-700">
-              <div className="flex items-start gap-4">
-                <span className="text-3xl">🤖</span>
+          <div className="animate-in fade-in duration-1000">
+            {/* MESSAGE DE L'IA */}
+            <div className="bg-slate-900 text-white p-8 rounded-3xl mb-10 shadow-2xl border-b-4 border-blue-500">
+              <div className="flex items-center gap-6">
+                <span className="text-5xl">🤖</span>
                 <div>
-                  <h3 className="font-bold text-lg mb-1">Analyse de l'expert terminée</h3>
-                  <p className="text-blue-100 italic">
+                  <h3 className="font-bold text-xl mb-1 text-blue-400">Analyse de l'expert terminée</h3>
+                  <p className="text-slate-300 italic text-lg leading-relaxed">
                     "Basé sur vos préférences, j'ai sélectionné 3 destinations qui capturent l'essence
-                    {results[0].category === 'Culture' ? ' culturelle' : ' authentique'} de la Wallonie
-                    tout en respectant votre budget. Voici votre itinéraire sur mesure :"
+                    {results[0].category.toLowerCase().includes('culture') ? ' culturelle' : ' authentique'} de la Wallonie.
+                    Voici votre itinéraire sur mesure :"
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* 2. LA CARTE INTERACTIVE */}
-            <h2 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
-              📍 Localisation des pépites
-            </h2>
-            <MapResults destinations={results} />
+            {/* CARTE */}
+            <div className="mb-12">
+              <h2 className="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+                <span className="bg-blue-100 p-2 rounded-lg">📍</span> Localisation des pépites
+              </h2>
+              <MapResults destinations={results} />
+            </div>
 
-            {/* 3. LA GRILLE DE CARTES */}
+            {/* GRILLE DE RÉSULTATS */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
               {results.map((city) => (
-                <div key={city.id} className="group bg-white rounded-2xl shadow-md overflow-hidden border border-slate-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                  <div className="bg-blue-600 text-white text-[10px] uppercase tracking-widest font-bold px-3 py-1.5 inline-block m-4 rounded-full">
-                    {city.province}
+                <div key={city.id} className="group bg-white rounded-3xl shadow-lg overflow-hidden border border-slate-100 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3">
+
+                  {/* IMAGE (Sortie du badge province) */}
+                  <div className="h-56 w-full overflow-hidden relative">
+                    <img
+                      src={city.image_url || "https://images.unsplash.com/photo-1512100356956-c1b47f4611bd?q=80&w=400"}
+                      alt={city.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                    {/* BADGE PROVINCE SUR L'IMAGE */}
+                    <div className="absolute top-4 left-4 bg-blue-600/90 backdrop-blur-sm text-white text-[10px] uppercase tracking-widest font-bold px-3 py-1.5 rounded-full shadow-lg">
+                      {city.province}
+                    </div>
                   </div>
-                  <div className="px-6 pb-6">
-                    <h3 className="text-2xl font-bold text-slate-800 mb-1 group-hover:text-blue-600 transition-colors flex items-center gap-2">
-  						{/* On ajoute l'icône ici */}
-  						<span>
-    						{city.category.includes('Musée') ? '🏛️' :
-							city.category.includes('Nature') ? '🌳' :
-							city.category.includes('Aventure') ? '🧗' : '📍'}
-						</span>
-						{city.name}
-					</h3>
-                    <div className="flex items-center gap-2 mb-4">
-                      <span className="text-xs font-medium bg-blue-50 text-blue-700 px-2 py-1 rounded">
+
+                  <div className="px-6 py-6">
+                    <h3 className="text-2xl font-bold text-slate-800 mb-2 group-hover:text-blue-600 transition-colors flex items-center gap-2">
+                      <span className="text-2xl">
+                        {city.category.includes('Musée') || city.category.includes('Culture') ? '🏛️' :
+                         city.category.includes('Nature') ? '🌳' :
+                         city.category.includes('Aventure') ? '🧗' : '📍'}
+                      </span>
+                      {city.name}
+                    </h3>
+
+                    <div className="flex items-center gap-3 mb-4">
+                      <span className="text-sm font-bold bg-green-50 text-green-700 px-3 py-1 rounded-full border border-green-100">
                         Match: {city.match_score}%
                       </span>
                     </div>
-                    <p className="text-slate-600 text-sm italic border-l-2 border-blue-100 pl-4">
+
+                    <p className="text-slate-600 text-sm italic leading-relaxed border-l-4 border-blue-100 pl-4 py-1">
                       {city.ai_description}
                     </p>
                   </div>
-                  <div className="px-6 py-4 bg-slate-50 flex justify-between items-center text-xs font-bold uppercase tracking-wider">
-                     <span className="text-slate-400">BUDGET: {"$".repeat(city.budget_index || 1)}</span>
-                     <span className="text-blue-600">Détails →</span>
+
+                  <div className="px-6 py-4 bg-slate-50/50 border-t border-slate-100 flex justify-between items-center text-xs font-bold uppercase tracking-wider">
+                     <span className="text-slate-400">Budget: <span className="text-slate-600">{"$".repeat(city.budget_index || 1)}</span></span>
+                     <button className="text-blue-600 hover:text-blue-800 transition-colors">Découvrir →</button>
                   </div>
                 </div>
               ))}
             </div>
-          </>
+          </div>
         )}
       </main>
     </div>

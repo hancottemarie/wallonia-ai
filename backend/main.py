@@ -83,14 +83,16 @@ def recommend_destinations(prefs: UserPreferences):
     scored_destinations = []
 
     for dest in data:
+        # 1. FILTRE BUDGET : Radical et efficace
         if dest.get("budget_index", 1) > prefs.budget_max:
             continue
 
-        base_score = 10 
+        base_score = 5 # Score de départ
 
         dest_cat = str(dest.get("category", "")).lower()
         pref_vibe = str(prefs.vibe).lower()
 
+        # 2. MAPPING SÉMANTIQUE
         culture_keywords = ["musée", "culture", "histoire", "château", "patrimoine"]
         adventure_keywords = ["aventure", "sport", "nature", "randonnée", "escalade"]
 
@@ -101,20 +103,26 @@ def recommend_destinations(prefs: UserPreferences):
         elif dest_cat == pref_vibe:
             base_score += 50
 
-
+        # 3. BONUS TAGS (Sorti de la boucle de calcul)
         for tag in dest.get("tags", []):
             if tag.lower() == pref_vibe:
                 base_score += 10
 
+        # 4. CALCUL DU SCORE (Une seule fois après les bonus)
         if scoring_lib:
-            final_score = scoring_lib.calculate_match_score(int(base_score), 1.2, 1)
+            raw_score = scoring_lib.calculate_match_score(int(base_score), 1.1, 1)
         else:
-            final_score = base_score * 1.2
+            raw_score = base_score * 1.1
+
+        # 5. VARIATION "IA-LIKE"
+        variation = random.uniform(0, 5)
+        final_percentage = min(raw_score + variation, 99.9)
 
         new_dest = dest.copy()
-        new_dest["match_score"] = round(min(final_score, 99.0), 1)
+        new_dest["match_score"] = round(final_percentage, 1)
         scored_destinations.append(new_dest)
 
+    # 6. TRI ET SÉLECTION
     top_results = sorted(scored_destinations, key=lambda x: x["match_score"], reverse=True)[:3]
 
     for res in top_results:
