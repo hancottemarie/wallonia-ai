@@ -31,6 +31,11 @@ def load_data():
 def home():
     return {"status": "Wallonia.ai Engine Online"}
 
+class UserPreferences(BaseModel):
+    vibe: str
+    budget_max: int
+    province: Optional[str] = None
+
 @app.post("/recommend")
 def recommend_destinations(prefs: UserPreferences):
     data = load_data()
