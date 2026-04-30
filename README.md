@@ -17,4 +17,5 @@ Etapes:
 4. resultat mis dans /data/destinations.json
 prepa de l'environnement python
 5. dans backend python -m venv venv et activer pour bosser proprement
-6. pip install fastapi uvicorn
+6. pip install fastapi uvicorn # On sauvegarde les dépendances pour le futur recruteur
+pip freeze > requirements.txt
