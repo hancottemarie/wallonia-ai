@@ -7,6 +7,7 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   const handleSearch = async (formData) => {
+	console.log("Données envoyées au serveur :", formData); // <-- AJOUTE ÇA
     setLoading(true);
     try {
       const response = await axios.post('http://127.0.0.1:8000/recommend', formData);
