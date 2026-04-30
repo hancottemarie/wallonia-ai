@@ -49,7 +49,7 @@ Imagine que ton site est un jeu de LEGO.
 
     Avantage : Si tu veux changer le design de toutes tes cartes de villes, tu ne modifies qu'un seul fichier (le composant Card), et tout le site se met à jour.
 23. JSX: jsvascript xml : extension de syntaxe pour javascript melange de java +html. POURQUOI? : ecrit la structure de mon interface (html). en gros on passe de React.createElement('h1', {className: 'title'}, 'Hello') ------a------<h1 className="title">Hello</h1>
-Vite a un role : chrome et safari ne savent pas voir jsx donc vite le transforme en javascriptpur pour la comprehension du navigateur.
+Vite a un role : chrome et safari ne savent pas voir jsx donc vite le transforme en javascript pur pour la comprehension du navigateur.
 24. export de TravelForm.jsx permet a React de comprendre que on veut utiliser la brique qu'on a creer donc export dans travelform et import dans App.jsx
 POURAUOI IMPORTANT: en React, l'application est un Arbre de composants App.jsx est la racine tandis que par ex TravelForm est plutot comme une branche.
 25. e.preventDefault() Par défaut : En HTML, quand tu valides un formulaire, le navigateur essaie d'envoyer les données et de recharger la page.
