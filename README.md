@@ -13,4 +13,5 @@ Limit : Tape 1 pour ton premier test réel. Une fois que la première ligne est 
 Etapes:
 1. via le site webscraper.io scrap des attractions vers fichier csv
 2. transformer celui-ci e google sheet
-3. via make.com faire un scenario partant de mon google sheet->gemini pour transformer les infos en json
+3. via make.com faire un scenario partant de mon google sheet->gemini pour transformer les infos en json ->google sheet pour noter resultat dans nouvelle colonne
+4. 
