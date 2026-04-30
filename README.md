@@ -30,5 +30,5 @@ pip freeze > requirements.txt
 15. Changement dans le main.py AVANT : os.path.join("..", ) Maintenant on utilise l'objet path qui gere mieux les /, \ peut importe l'env os.
 16. ajout egalement d'une securite si scoring_lib existe avant de l'utiliser pour pas crasher tt le serveux si oublie de compilation de la lib C.
 17. ajout API-Key de groq pour modele llama3. utilisation au get pour limiter usage et activation que a la fin de main.py
-18. dans main.py chargement de la lib C avec protection si impossible de charger switch sur python
+18. dans main.py chargement de la lib C avec protection si impossible de charger fallback sur python
 19.
