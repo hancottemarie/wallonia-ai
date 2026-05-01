@@ -97,3 +97,4 @@ Le concept : Quand l'IA trouve une ville, un marqueur avec l'icône de la catég
 Ajout d'un Bloc de filtrage qui verifie si la province de la destination correspond a celle demandee. Si pas de match continue pour ignorer le lieu immediatement
 
 
+
