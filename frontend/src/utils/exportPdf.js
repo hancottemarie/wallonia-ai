@@ -1,46 +1,83 @@
 import jsPDF from 'jspdf';
+import axios from 'axios';
 
-export const exportToPDF = (destinations) => {
-  const doc = new jsPDF();
-  const date = new Date().toLocaleDateString();
+export const exportToPDF = async (itinerary) => {
+    const doc = new jsPDF();
+    const date = new Date().toLocaleDateString();
+    const margin = 20;
+    const pageWidth = 190;
+    const lineHeight = 6; // mm par ligne
 
-  // --- Style ---
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(22);
-  doc.setTextColor(37, 99, 235);
-  doc.text("Wallonia.ai - Mon Roadtrip", 20, 20);
-
-  doc.setFontSize(10);
-  doc.setTextColor(100);
-  doc.text(`Généré le ${date} - Itinéraire personnalisé`, 20, 30);
-  doc.line(20, 35, 190, 35);
-
-  let yOffset = 50;
-
-  destinations.forEach((city, index) => {
-    // Ville et Province
-    doc.setFontSize(16);
-    doc.setTextColor(30, 41, 59);
-    doc.text(`${index + 1}. ${city.name} (${city.province})`, 20, yOffset);
-
-    // Score
-    doc.setFontSize(10);
-    doc.setTextColor(37, 99, 235);
-    doc.text(`Pertinence : ${city.match_score}%`, 20, yOffset + 7);
-
-    // Description IA (Gère le retour à la ligne automatique)
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(71, 85, 105);
-    const description = doc.splitTextToSize(city.ai_description, 165);
-    doc.text(description, 20, yOffset + 15);
-
-    yOffset += 45; // Espacement pour le prochain bloc
-
-    if (yOffset > 270) {
-      doc.addPage();
-      yOffset = 20;
+    // 1. Récupération du récit narratif
+    let aiStory = "";
+    try {
+        const response = await axios.post('http://127.0.0.1:8000/generate-itinerary-story', itinerary);
+        aiStory = response.data.story;
+    } catch (error) {
+        aiStory = "Un voyage mémorable vous attend à travers les provinces wallonnes.";
     }
-  });
 
-  doc.save(`Roadtrip_Wallonia.pdf`);
+    // --- DESIGN DU HEADER ---
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(24);
+    doc.setTextColor(30, 58, 138);
+    doc.text("WALLONIA.AI - MON CARNET DE ROUTE", margin, 25);
+
+    doc.setFontSize(10);
+    doc.setTextColor(150);
+    doc.text(`Édition du ${date} - Itinéraire Sur-Mesure`, margin, 32);
+    doc.line(margin, 35, pageWidth, 35);
+
+    // --- SECTION 1 : LE RÉCIT NARRATIF ---
+    doc.setFontSize(14);
+    doc.setTextColor(37, 99, 235);
+    doc.text("L'histoire de votre voyage :", margin, 45);
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(60);
+
+    const storyLines = doc.splitTextToSize(aiStory, pageWidth - margin);
+    doc.text(storyLines, margin, 55);
+
+    // CALCUL DYNAMIQUE DE LA POSITION SUIVANTE
+    let currentY = 60 + (storyLines.length * lineHeight);
+
+    // --- SECTION 2 : LES ÉTAPES ---
+    if (currentY > 250) { doc.addPage(); currentY = 25; }
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.setTextColor(30, 58, 138);
+    doc.text("Vos escales", margin, currentY);
+    currentY += 12;
+
+    itinerary.forEach((city, index) => {
+        // Nouveau titre d'étape
+        doc.setFontSize(12);
+        doc.setTextColor(30);
+        doc.text(`${index + 1}. ${city.name} (${city.province})`, margin, currentY);
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(9);
+        doc.setTextColor(80);
+
+        // Texte de l'étape
+        const desc = city.ai_description || "Détails à découvrir sur place.";
+        const splitDesc = doc.splitTextToSize(desc, pageWidth - 30);
+
+        // On vérifie si l'étape tient encore sur la page
+        const blockHeight = (splitDesc.length * 5) + 15;
+        if (currentY + blockHeight > 280) {
+            doc.addPage();
+            currentY = 25;
+        }
+
+        doc.text(splitDesc, margin + 5, currentY + 7);
+
+        // MISE À JOUR DE Y POUR LA PROCHAINE ÉTAPE
+        currentY += blockHeight;
+    });
+
+    doc.save(`Roadtrip_Wallonia_AI.pdf`);
 };

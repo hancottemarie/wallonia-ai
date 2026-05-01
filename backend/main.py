@@ -59,7 +59,7 @@ Be witty and professional.
 """
         chat_completion = client.chat.completions.create(
             messages=[{"role": "user", "content": prompt}],
-            model="llama3-8b-8192",
+            model="llama-3.1-8b-instant",
         )
         return chat_completion.choices[0].message.content
     except Exception as e:
@@ -70,10 +70,11 @@ Be witty and professional.
 class UserPreferences(BaseModel):
     vibe: str
     budget_max: int
-    province: Optional[str] = None # Déjà présent, on va l'utiliser !
+    province: Optional[str] = None
     search_query: Optional[str] = ""
 
 # --- ROUTES ---
+
 @app.get("/")
 def home():
     return {"status": "Wallonia.ai Engine Online", "c_engine": scoring_lib is not None}
@@ -83,27 +84,24 @@ def recommend_destinations(prefs: UserPreferences):
     data = load_data()
     scored_destinations = []
 
-    # On définit la query de recherche et la province (nettoyées)
     search_term = prefs.search_query.lower().strip() if prefs.search_query else ""
     selected_province = prefs.province.lower().strip() if prefs.province else ""
 
     for dest in data:
-        # --- 1. FILTRE PAR PROVINCE (NOUVEAU) ---
-        # Si une province est choisie et qu'elle ne correspond pas à la destination, on passe à la suivante
+        # Filtre Province
         if selected_province and selected_province != "toutes":
             dest_prov = str(dest.get("province", "")).lower().strip()
             if selected_province not in dest_prov:
                 continue
 
-        # --- 2. FILTRE DE RECHERCHE PAR NOM ---
+        # Filtre Recherche
         if search_term and search_term not in dest.get("name", "").lower():
             continue
 
-        # --- 3. FILTRE BUDGET ---
+        # Filtre Budget
         if dest.get("budget_index", 1) > prefs.budget_max:
             continue
 
-        # --- LOGIQUE DE SCORING ---
         base_score = 5
         dest_cat = str(dest.get("category", "")).lower()
         pref_vibe = str(prefs.vibe).lower()
@@ -137,10 +135,34 @@ def recommend_destinations(prefs: UserPreferences):
         new_dest["match_score"] = round(final_percentage, 1)
         scored_destinations.append(new_dest)
 
-    # TRI ET SÉLECTION DU TOP 3
     top_results = sorted(scored_destinations, key=lambda x: x["match_score"], reverse=True)[:3]
 
     for res in top_results:
         res["ai_description"] = get_ai_recommendation(res["name"], res.get("category", "Culture"))
 
     return top_results
+
+# --- NOUVELLE ROUTE : GENERATEUR D'HISTOIRE PDF ---
+@app.post("/generate-itinerary-story")
+def generate_story(cities: List[dict]):
+    """Génère un récit de voyage cohérent reliant les étapes de l'itinéraire"""
+    city_names = [c.get('name', 'Inconnu') for c in cities]
+
+    prompt = f"""
+Rédige un itinéraire de voyage de luxe en Wallonie reliant ces étapes dans l'ordre précis : {', '.join(city_names)}.
+Pour chaque ville :
+1. Partage une anecdote historique captivante ou un secret local.
+2. Décris l'ambiance de la route vers l'étape suivante.
+Utilise un ton professionnel, inspirant et élégant (style Guide Voyage de Luxe).
+Reste concis mais riche en détails.
+"""
+
+    try:
+        chat_completion = client.chat.completions.create(
+            messages=[{"role": "user", "content": prompt}],
+            model="llama3-3.3-70b-versatile",
+        )
+        return {"story": chat_completion.choices[0].message.content}
+    except Exception as e:
+        print(f"Error Story AI: {e}")
+        return {"story": "Un voyage extraordinaire vous attend à travers les paysages pittoresques de la Wallonie."}
