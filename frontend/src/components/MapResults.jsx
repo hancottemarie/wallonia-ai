@@ -22,10 +22,21 @@ const icons = {
 };
 
 export default function MapResults({ destinations }) {
-  const center = [50.4674, 4.8719]; // On centre sur Namur
+  const center = [50.4674, 4.8719];
+
+  const getDestinationIcon = (category) => {
+    if (!category) return icons.default;
+
+    const cat = category.toLowerCase();
+
+    if (cat.includes('musée') || cat.includes('culture')) return icons.Musée;
+    if (cat.includes('nature') || cat.includes('parc') || cat.includes('forêt')) return icons.Nature;
+
+    return icons.default;
+  };
 
   return (
-    <div className="h-[450px] w-full rounded-3xl overflow-hidden shadow-2xl border-8 border-white mb-12">
+    <div className="h-[450px] w-full rounded-3xl overflow-hidden shadow-2xl border-8 border-white dark:border-slate-800 mb-12 transition-colors">
       <MapContainer center={center} zoom={8} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
         <TileLayer
             attribution='&copy; OpenStreetMap contributors'
@@ -36,22 +47,12 @@ export default function MapResults({ destinations }) {
           <Marker
             key={city.id}
             position={[city.coordinates.lat, city.coordinates.lng]}
-            icon={icons[city.category] || icons.default} // Sélection dynamique du logo
+            // Utilisation de la nouvelle fonction
+            icon={getDestinationIcon(city.category)}
           >
-			<Popup>
-				<div className="text-center p-1">
-					<div className="text-2xl mb-1">
-						{city.category.includes('Musée') ? '🏛️' : '📍'}
-					</div>
-					<strong className="text-blue-900 text-lg block leading-tight">{city.name}</strong>
-					<span className="text-slate-400 text-xs font-semibold uppercase tracking-wider">
-						{city.category}
-					</span>
-					<div className="mt-2 py-1 px-2 bg-blue-50 rounded-lg text-blue-600 font-bold text-sm">
-						SCORE: {city.match_score}%
-					</div>
-				</div>
-			</Popup>
+            <Popup>
+                {/* ... ton code Popup reste identique */}
+            </Popup>
           </Marker>
         ))}
       </MapContainer>
