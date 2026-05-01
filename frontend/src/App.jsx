@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import TravelForm from './components/TravelForm';
 import DarkModeToggle from './components/DarkModeToggle';
+import { exportToPDF } from './utils/exportPdf';
 
 function App() {
 	const [results, setResults] = useState([]);
@@ -77,6 +78,16 @@ function App() {
 								</div>
 							</div>
 						</div>
+
+						{/*EXPORT PDF*/}
+						{results.length > 0 && (
+  							<button
+								onClick={() => exportToPDF(results)}
+								className="mb-6 flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-6 rounded-xl transition-all shadow-md active:scale-95"
+							>
+								<span>📄</span> Exporter en PDF
+							</button>
+							)}
 
 						{/* SECTION CARTE */}
 						<div className="mb-12">
