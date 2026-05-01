@@ -94,6 +94,6 @@ Le concept : Quand l'IA trouve une ville, un marqueur avec l'icône de la catég
 38. TODO: FIX barre de recherche+son icone
 39. Debut de feature supllementaire : filtrage par province;
 40. Pour rajouter cette feature il faut agir et au niveau du backend et du frontend. Pour le Backend : changement dans main.py Ajout de : - Recuperation de la province au debut de la fonction : selected_province = prefs.province.lower().strip() if prefs.province else ""
-Ajout d'un Bloc de filtrage A
+Ajout d'un Bloc de filtrage au 
 
 
