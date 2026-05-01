@@ -25,12 +25,8 @@ function App() {
 
 	return (
 
-		<div className="min-h-screen w-full transition-colors duration-500
-                /* MODE CLAIR : Fond gris très clair, texte sombre */
-                bg-slate-50 text-slate-900
-                /* MODE SOMBRE : Fond bleu nuit, texte blanc */
-                dark:bg-[#020617] dark:text-white">
-			<DarkModeToggle />
+		<div className="min-h-screen w-full transition-colors duration-500 bg-slate-50 text-slate-900 dark:bg-[#020617] dark:text-white">
+            <DarkModeToggle />
 
 			<header className="text-center mb-10">
 				<h1 className="text-5xl font-black text-slate-900 dark:text-white tracking-tight transition-colors">
@@ -70,11 +66,7 @@ function App() {
 				{!loading && results.length > 0 && (
 					<div className="animate-in fade-in duration-1000">
 						{/* MESSAGE DE L'IA */}
-						<div className="p-8 rounded-3xl mb-10 shadow-xl transition-all duration-500 border-b-4 border-blue-500
-                /* CLAIR */
-                bg-white text-slate-900
-                /* SOMBRE */
-                dark:bg-blue-950 dark:text-white">
+						<div className="p-8 rounded-3xl mb-10 shadow-xl transition-all duration-500 border-b-4 border-blue-500 bg-white text-slate-900 dark:bg-blue-950 dark:text-white">
 							<div className="flex items-center gap-6">
 								<span className="text-5xl">🤖</span>
 								<div>

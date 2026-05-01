@@ -1,5 +1,18 @@
 @import "tailwindcss";
 @import "leaflet/dist/leaflet.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+html:not(.dark) body,
+html:not(.dark) #root,
+html:not(.dark) .min-h-screen {
+    background-color: #f8fafc !important; /* slate-50 */
+    color: #0f172a !important;            /* slate-900 */
+}
+@theme {
+	--dark-mode: selector(.dark);
+}
+
 .dark .leaflet-tile {
     filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
 }
@@ -7,6 +20,7 @@
 .dark .leaflet-container {
     background: #020617; /* Slate 950 pour matcher ton fond */
 }
+
 body {
   margin: 0;
   padding: 0;
