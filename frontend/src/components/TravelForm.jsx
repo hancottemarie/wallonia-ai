@@ -3,10 +3,11 @@ import React, { useState } from 'react';
 export default function TravelForm({ onSearch }) {
   const [vibe, setVibe] = useState('Adventure');
   const [budget, setBudget] = useState(2);
+  const [province, setProvince] = useState('toutes')
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch({ vibe, budget_max: budget });
+    onSearch({ vibe, budget_max: budget, province });
   };
 
   return (
@@ -32,6 +33,25 @@ export default function TravelForm({ onSearch }) {
           <option value="Chill">Chill 🧘</option>
           <option value="Culture">Culture 🏛️</option>
           <option value="Food">Food 🍟</option>
+        </select>
+      </div>
+
+	{/* 3. NOUVEAU SÉLECTEUR DE PROVINCE */}
+      <div className="mb-4">
+        <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 transition-colors">
+          Which area?
+        </label>
+        <select
+          value={province}
+          onChange={(e) => setProvince(e.target.value)}
+          className="w-full p-3 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+        >
+          <option value="toutes">All Wallonia 🇧🇪</option>
+          <option value="Brabant Wallon">Brabant Wallon</option>
+          <option value="Hainaut">Hainaut</option>
+          <option value="Liège">Liège</option>
+          <option value="Luxembourg">Luxembourg</option>
+          <option value="Namur">Namur</option>
         </select>
       </div>
 
