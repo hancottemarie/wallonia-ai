@@ -4,15 +4,16 @@ export default function DarkModeToggle() {
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
-    const root = window.document.documentElement;
-    if (isDark) {
-      root.classList.add('dark');
-      console.log("🌙 SWITCH -> DARK");
-    } else {
-      root.classList.remove('dark');
-      console.log("☀️ SWITCH -> LIGHT");
-    }
-  }, [isDark]);
+  const root = window.document.documentElement;
+
+  if (isDark) {
+    root.classList.add('dark');
+    root.style.colorScheme = 'dark';
+  } else {
+    root.classList.remove('dark');
+    root.style.colorScheme = 'light';
+  }
+}, [isDark]);
 
   return (
     <button

@@ -25,7 +25,11 @@ function App() {
 
 	return (
 
-		<div className="min-h-screen bg-white dark:bg-slate-950 transition-colors duration-500">
+		<div className="min-h-screen w-full transition-colors duration-500
+                /* MODE CLAIR : Fond gris très clair, texte sombre */
+                bg-slate-50 text-slate-900
+                /* MODE SOMBRE : Fond bleu nuit, texte blanc */
+                dark:bg-[#020617] dark:text-white">
 			<DarkModeToggle />
 
 			<header className="text-center mb-10">
@@ -40,7 +44,11 @@ function App() {
 				<input
 					type="text"
 					placeholder="Chercher une ville..."
-					className="w-full px-6 py-4 rounded-2xl border-none shadow-lg bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-blue-500 outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-600"
+					className="w-full px-6 py-4 rounded-2xl outline-none transition-all
+             bg-white dark:bg-slate-900
+             text-slate-800 dark:text-slate-200
+             border border-slate-200 dark:border-slate-800
+             shadow-lg focus:ring-2 focus:ring-blue-500"
 					value={searchQuery}
 					onChange={(e) => setSearchQuery(e.target.value)}
 				/>
@@ -62,12 +70,16 @@ function App() {
 				{!loading && results.length > 0 && (
 					<div className="animate-in fade-in duration-1000">
 						{/* MESSAGE DE L'IA */}
-						<div className="bg-slate-900 dark:bg-blue-950 text-white p-8 rounded-3xl mb-10 shadow-2xl border-b-4 border-blue-500 transition-colors">
+						<div className="p-8 rounded-3xl mb-10 shadow-xl transition-all duration-500 border-b-4 border-blue-500
+                /* CLAIR */
+                bg-white text-slate-900
+                /* SOMBRE */
+                dark:bg-blue-950 dark:text-white">
 							<div className="flex items-center gap-6">
 								<span className="text-5xl">🤖</span>
 								<div>
-									<h3 className="font-bold text-xl mb-1 text-blue-400">Analyse de l'expert terminée</h3>
-									<p className="text-slate-300 dark:text-blue-200 italic text-lg leading-relaxed">
+									<h3 className="font-bold text-xl mb-1 text-blue-600 dark:text-blue-400">Analyse de l'expert terminée</h3>
+									<p className="text-slate-600 dark:text-blue-200 italic text-lg leading-relaxed">
 										"Basé sur vos préférences, j'ai sélectionné {results.length} destinations pépites..."
 									</p>
 								</div>
