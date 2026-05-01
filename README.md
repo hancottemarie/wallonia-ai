@@ -92,6 +92,6 @@ Le concept : Quand l'IA trouve une ville, un marqueur avec l'icône de la catég
 36. dans tailwind.config.js pour le mode sombre debug complet du darkmode Tailwind v.4 suit le systeme par defaut, Il y a un ordre de priorite : Un style injecte en JS (le bouton)doit etre explicitement declare dans le CSS pour que Tailwind l'ecoute. Le selecteur :not(.dark) est un excellent moyen de garantir qu'un style ne s'applique que dans un etat precis.
 37. TODO: supplementaire fix le bouton darkmode qui disparait derriere la carte. C'est pas tres subtil.
 38. TODO: FIX barre de recherche+son icone
-39. Debut de feature supllementaire : filtrage par province
+39. Debut de feature supllementaire : filtrage par province. 
 
 
