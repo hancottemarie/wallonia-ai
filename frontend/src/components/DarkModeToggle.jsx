@@ -23,7 +23,7 @@ export default function DarkModeToggle() {
 	return (
 		<button
 			onClick={() => setIsDark(!isDark)}
-			className="fixed top-6 right-6 z-[100] p-4 rounded-2xl shadow-2xl
+			className="fixed top-6 right-6 z-[9999] p-4 rounded-2xl shadow-2xl
                  bg-white dark:bg-slate-800 text-2xl hover:scale-110
                  active:scale-95 transition-all duration-300 border-2
                  border-slate-200 dark:border-slate-700 cursor-pointer"
