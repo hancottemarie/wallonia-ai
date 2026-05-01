@@ -97,5 +97,5 @@ Le concept : Quand l'IA trouve une ville, un marqueur avec l'icône de la catég
 Ajout d'un Bloc de filtrage qui verifie si la province de la destination correspond a celle demandee. Si pas de match continue pour ignorer le lieu immediatement
 Ajout de securite: ajout d'un test pour "toutes". Si le front envoie "Toutes", le filtre ne bloquera rien.
 41. Ajout d'une feature supllementaire : - Export PDF du Roadtrip : Un bouton pour générer un petit itinéraire avec les résultats.
-42. TODO : rajout d'info's dans le pdf qui sont pas sur l'interface et faire un vrai itineraire en ce basant sur les descriptions longues du destinations.json donc encore interventon de l'IA.
+42. TODO : rajout d'info's dans le pdf qui sont pas sur l'interface et faire un vrai itineraire en ce basant sur les descriptions longues du destinations.json donc encore interventon de l'IA. Voir meme une fenetre qui s'ouvre en peu sur le cote une sorte de rectangle ou on peut faire un drag 
 
