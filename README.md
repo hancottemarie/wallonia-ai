@@ -93,6 +93,6 @@ Le concept : Quand l'IA trouve une ville, un marqueur avec l'icône de la catég
 37. TODO: supplementaire fix le bouton darkmode qui disparait derriere la carte. C'est pas tres subtil.
 38. TODO: FIX barre de recherche+son icone
 39. Debut de feature supllementaire : filtrage par province;
-40. Pour rajouter cette feature il faut agir et au niveau du backend et du frontend. Pour le Backend : changement dans main.py Ajout de : 
+40. Pour rajouter cette feature il faut agir et au niveau du backend et du frontend. Pour le Backend : changement dans main.py Ajout de : - Recuperation de la porvince 
 
 
