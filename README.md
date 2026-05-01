@@ -89,5 +89,5 @@ Le concept : Quand l'IA trouve une ville, un marqueur avec l'icône de la catég
 - Real-time Weather : Utiliser une API météo pour afficher le temps actuel dans les villes suggérées.
 34. Ajout d'images supplementaires(TODO :images specifiques pour chaque destinations dans destinations.json) et icone sur la carte(TODO :a ammeliorer+ TODO: sur carte coffre-fort sur carte) plus random dans le main.py pour des % differents.
 35. ajout de barre de recherche en temps reel via app.jcx et le main.py STILL TO FIX
-36. dans tailwind.config.js pour le mode sombre debug complet du darkmode Tailwind v.4 suit le systeme par defaut, Il y a un ordre de priorite : Un style injecte en JS (le bouton)doit etre explicitement declare dans le CSS pour que Tailwind l'ecoute. Le selecteur :not(.dark)
+36. dans tailwind.config.js pour le mode sombre debug complet du darkmode Tailwind v.4 suit le systeme par defaut, Il y a un ordre de priorite : Un style injecte en JS (le bouton)doit etre explicitement declare dans le CSS pour que Tailwind l'ecoute. Le selecteur :not(.dark) est un excellent 
 
