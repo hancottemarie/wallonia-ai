@@ -13,7 +13,7 @@ from dotenv import load_dotenv
 # --- CONFIGURATION ---
 app = FastAPI(title="Wallonia AI API")
 
-# Configuration du CORS (Indispensable pour React)
+# Configuration du CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -70,7 +70,7 @@ Be witty and professional.
 class UserPreferences(BaseModel):
     vibe: str
     budget_max: int
-    province: Optional[str] = None
+    province: Optional[str] = None # Déjà présent, on va l'utiliser !
     search_query: Optional[str] = ""
 
 # --- ROUTES ---
@@ -83,24 +83,31 @@ def recommend_destinations(prefs: UserPreferences):
     data = load_data()
     scored_destinations = []
 
-    # On définit la query de recherche (nettoyée)
+    # On définit la query de recherche et la province (nettoyées)
     search_term = prefs.search_query.lower().strip() if prefs.search_query else ""
+    selected_province = prefs.province.lower().strip() if prefs.province else ""
 
     for dest in data:
-        # --- NOUVEAU : FILTRE DE RECHERCHE PAR NOM ---
+        # --- 1. FILTRE PAR PROVINCE (NOUVEAU) ---
+        # Si une province est choisie et qu'elle ne correspond pas à la destination, on passe à la suivante
+        if selected_province and selected_province != "toutes":
+            dest_prov = str(dest.get("province", "")).lower().strip()
+            if selected_province not in dest_prov:
+                continue
+
+        # --- 2. FILTRE DE RECHERCHE PAR NOM ---
         if search_term and search_term not in dest.get("name", "").lower():
             continue
 
-        # 1. FILTRE BUDGET : Radical et efficace
+        # --- 3. FILTRE BUDGET ---
         if dest.get("budget_index", 1) > prefs.budget_max:
             continue
 
-        base_score = 5 # Score de départ
-
+        # --- LOGIQUE DE SCORING ---
+        base_score = 5
         dest_cat = str(dest.get("category", "")).lower()
         pref_vibe = str(prefs.vibe).lower()
 
-        # 2. MAPPING SÉMANTIQUE
         culture_keywords = ["musée", "culture", "histoire", "château", "patrimoine"]
         adventure_keywords = ["aventure", "sport", "nature", "randonnée", "escalade"]
 
@@ -111,12 +118,10 @@ def recommend_destinations(prefs: UserPreferences):
         elif dest_cat == pref_vibe:
             base_score += 50
 
-        # 3. BONUS TAGS
         for tag in dest.get("tags", []):
             if tag.lower() == pref_vibe:
                 base_score += 10
 
-        # 4. CALCUL DU SCORE (C ou Python)
         if scoring_lib:
             try:
                 raw_score = scoring_lib.calculate_match_score(int(base_score), 1.1, 1)
@@ -125,7 +130,6 @@ def recommend_destinations(prefs: UserPreferences):
         else:
             raw_score = base_score * 1.1
 
-        # 5. VARIATION "IA-LIKE" (Pour le style)
         variation = random.uniform(0, 5)
         final_percentage = min(raw_score + variation, 99.9)
 
@@ -133,7 +137,7 @@ def recommend_destinations(prefs: UserPreferences):
         new_dest["match_score"] = round(final_percentage, 1)
         scored_destinations.append(new_dest)
 
-    # 6. TRI ET SÉLECTION DU TOP 3
+    # TRI ET SÉLECTION DU TOP 3
     top_results = sorted(scored_destinations, key=lambda x: x["match_score"], reverse=True)[:3]
 
     for res in top_results:
