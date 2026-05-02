@@ -66,4 +66,8 @@ cd core_engine
 gcc -shared -o scoring.so -fPIC scoring.c
 
 ### 2. Lancer le Backend (Python)
-
+cd backend
+python -m venv venv
+source venv/bin/activate # ou .\venv\Scripts\activate sur Windows
+pip install -r requirements.txt
+uvicorn main:app --reload
