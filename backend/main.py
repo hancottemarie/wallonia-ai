@@ -67,9 +67,11 @@ Be witty and professional.
         print(f"Error AI: {e}")
         return "A wonderful hidden gem in Wallonia waiting to be explored."
 
-def get_weather(city_name: str):
+# On change le paramètre pour prendre lat et lng au lieu de city_name
+def get_weather_by_coords(lat: float, lng: float):
     api_key = os.environ.get("OPENWEATHER_API_KEY")
-    url = f"https://api.openweathermap.org/data/2.5/weather?q={city_name},BE&appid={api_key}&units=metric&lang=fr"
+    # L'URL utilise lat={lat} et lon={lng} pour une précision maximale
+    url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lng}&appid={api_key}&units=metric&lang=fr"
     try:
         response = requests.get(url, timeout=2)
         if response.status_code == 200:
@@ -81,7 +83,8 @@ def get_weather(city_name: str):
             }
     except:
         pass
-    return None # Retourne None si l'API échoue
+    return None
+
 # --- MODELES ---
 class UserPreferences(BaseModel):
     vibe: str
@@ -153,9 +156,17 @@ def recommend_destinations(prefs: UserPreferences):
 
     top_results = sorted(scored_destinations, key=lambda x: x["match_score"], reverse=True)[:3]
 
+    # ... (après le tri des top_results)
     for res in top_results:
         res["ai_description"] = get_ai_recommendation(res["name"], res.get("category", "Culture"))
-        res["weather"] = get_weather(res["name"])
+
+        # --- AJOUT : ON RÉCUPÈRE LES COORDONNÉES DE LA DESTINATION ---
+        coords = res.get("coordinates", {})
+        lat, lng = coords.get("lat"), coords.get("lng")
+
+        # On ne cherche par coordonnées que si elles existent
+        if lat and lng:
+            res["weather"] = get_weather_by_coords(lat, lng)
 
     return top_results
 
@@ -184,3 +195,24 @@ Reste concis mais riche en détails.
         # Affiche l'erreur réelle dans ton terminal pour débugger
         print(f"❌ Erreur Story AI : {e}")
         return {"story": "Un voyage extraordinaire vous attend à travers les paysages pittoresques de la Wallonie."}
+
+@app.get("/city-details/{city_name}")
+async def get_city_details(city_name: str, weather: str):
+    prompt = f"""
+    Agis comme un rédacteur de blog voyage luxe pour Visit Wallonia.
+    Rédige une fiche pour la ville de {city_name}. La météo actuelle est : {weather}.
+
+    Réponds UNIQUEMENT au format JSON strict avec ces clés :
+    - intro_blog: un texte de 3 phrases invitant et poétique.
+    - meteo_conseil: un conseil d'activité spécifique à cette ville s'il fait {weather}.
+    - top_restos: une liste de 3 objets (nom, specialite, ambiance).
+    - secret_spot: un lieu méconnu à visiter.
+    """
+
+    completion = client.chat.completions.create(
+        model="llama-3.1-8b-instant",
+        messages=[{"role": "user", "content": prompt}],
+        response_format={"type": "json_object"}
+    )
+
+    return json.loads(completion.choices[0].message.content)

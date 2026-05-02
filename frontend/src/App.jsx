@@ -4,6 +4,7 @@ import { useState } from 'react';
 import TravelForm from './components/TravelForm';
 import DarkModeToggle from './components/DarkModeToggle';
 import { exportToPDF } from './utils/exportPdf';
+import CityDetailDrawer from './components/CityDetailDrawer';
 
 // Imports D&D
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
@@ -16,6 +17,9 @@ function App() {
     const [searchQuery, setSearchQuery] = useState("");
     const [isPanelOpen, setIsPanelOpen] = useState(false);
     const [itinerary, setItinerary] = useState([]);
+
+    // [NOUVEAU] État pour la ville inspectée (Drawer de gauche)
+    const [inspectedCity, setInspectedCity] = useState(null);
 
     // [CONFIG] Capteurs pour le Drag & Drop
     const sensors = useSensors(
@@ -72,11 +76,20 @@ function App() {
     return (
         <div className="flex min-h-screen w-full transition-colors duration-500 bg-slate-50 text-slate-900 dark:bg-[#020617] dark:text-white overflow-x-hidden">
 
+            {/* [NOUVEAU] COMPOSANT TIROIR INFOS (Généré par l'IA) */}
+            <CityDetailDrawer
+                city={inspectedCity}
+                isOpen={!!inspectedCity}
+                onClose={() => setInspectedCity(null)}
+            />
+
             {/* ZONE PRINCIPALE */}
+            {/* Ajout d'un flou si le drawer ou le panier est ouvert pour focus l'attention */}
             <div className={`transition-all duration-500 ease-in-out flex-1 ${isPanelOpen ? 'mr-[30%] opacity-50 scale-[0.98] pointer-events-none' : 'mr-0'}`}>
 
                 <DarkModeToggle />
 
+                {/* Bouton du sac à dos */}
                 <button
                     onClick={() => setIsPanelOpen(!isPanelOpen)}
                     className="fixed top-20 right-6 z-40 bg-blue-600 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform"
@@ -108,69 +121,88 @@ function App() {
                             <>
                                 <div className="mb-12"><MapResults destinations={results} /></div>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-20">
-    {results.map((city) => (
-        <div key={city.id} className="bg-white dark:bg-slate-900 rounded-3xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2x1">
+                                    {results.map((city) => (
+                                        <div key={city.id} className="bg-white dark:bg-slate-900 rounded-3xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
 
-            {/* Image de la destination */}
-            <div className="h-40 bg-slate-200 relative">
-                <img src={city.image_url} className="w-full h-full object-cover" alt={city.name} />
+                                            {/* [MODIFIÉ] Image de la destination - Clic pour ouvrir les détails */}
+                                            <div
+                                                className="h-40 bg-slate-200 relative cursor-pointer group"
+                                                onClick={() => setInspectedCity(city)}
+                                            >
+                                                <img src={city.image_url} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt={city.name} />
 
-                {/* Petit badge de province sur l'image */}
-                <div className="absolute top-3 left-3 bg-blue-600/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded-lg uppercase">
-                    {city.province}
-                </div>
-            </div>
+                                                {/* Overlay au survol */}
+                                                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                    <span className="bg-white/90 text-black text-[10px] font-bold px-3 py-1.5 rounded-full shadow-xl">DÉCOUVRIR 🔍</span>
+                                                </div>
 
-            <div className="p-6">
-                {/* --- BLOC MÉTÉO (NOUVEAU) --- */}
-                {city.weather && (
-                    <div className="flex items-center gap-2 mb-3 bg-blue-50/50 dark:bg-blue-900/20 w-fit px-3 py-1 rounded-full border border-blue-100 dark:border-blue-800/50">
-                        <img
-                            src={`https://openweathermap.org/img/wn/${city.weather.icon}.png`}
-                            alt="weather icon"
-                            className="w-6 h-6 object-contain"
-                        />
-                        <span className="text-sm font-black text-blue-600 dark:text-blue-400">
-                            {city.weather.temp}°C
-                        </span>
-                        <span className="text-[10px] font-medium text-slate-500 dark:text-slate-400 capitalize hidden sm:inline">
-                            • {city.weather.desc}
-                        </span>
-                    </div>
-                )}
+                                                {/* Petit badge de province sur l'image */}
+                                                <div className="absolute top-3 left-3 bg-blue-600/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded-lg uppercase">
+                                                    {city.province}
+                                                </div>
+                                            </div>
 
-                {/* Nom de la ville */}
-                <h3 className="text-xl font-bold mb-4 text-slate-800 dark:text-white">
-                    {city.name}
-                </h3>
+                                            <div className="p-6">
+                                                {/* --- BLOC MÉTÉO --- */}
+                                                {city.weather && (
+                                                    <div className="flex items-center gap-2 mb-3 bg-blue-50/50 dark:bg-blue-900/20 px-3 py-1.5 rounded-full border border-blue-100 dark:border-blue-800/50 w-full overflow-hidden">
+                                                        <img
+                                                            src={`https://openweathermap.org/img/wn/${city.weather.icon}.png`}
+                                                            alt="weather icon"
+                                                            className="w-6 h-6 object-contain shrink-0"
+                                                        />
+                                                        <span className="text-sm font-black text-blue-600 dark:text-blue-400 shrink-0">
+                                                            {city.weather.temp}°C
+                                                        </span>
+                                                        <span className="text-[10px] font-medium text-slate-500 dark:text-slate-400 capitalize hidden sm:inline flex-1 truncate min-w-0">
+                                                            • {city.weather.desc}
+                                                        </span>
+                                                    </div>
+                                                )}
 
-                {/* Bouton d'action */}
-                <button
-                    onClick={() => addToItinerary(city)}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl text-xs font-bold shadow-md hover:shadow-blue-500/20 transition-all active:scale-95"
-                >
-                    + Ajouter au plan 🎒
-                </button>
-            </div>
-        </div>
-    ))}
-</div>
+                                                {/* Nom de la ville */}
+                                                <h3 className="text-xl font-bold mb-4 text-slate-800 dark:text-white">
+                                                    {city.name}
+                                                </h3>
+
+                                                {/* [MODIFIÉ] Boutons d'action (Ajout + Info) */}
+                                                <div className="flex gap-2">
+                                                    <button
+                                                        onClick={() => addToItinerary(city)}
+                                                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl text-xs font-bold shadow-md hover:shadow-blue-500/20 transition-all active:scale-95"
+                                                    >
+                                                        + Ajouter 🎒
+                                                    </button>
+                                                    <button
+                                                        onClick={() => setInspectedCity(city)}
+                                                        className="px-4 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
+                                                        title="Plus d'infos"
+                                                    >
+                                                        ℹ️
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             </>
                         )
                     )}
                 </main>
             </div>
 
-            {/* [PANNEAU LATÉRAL] : Intégration du DndContext ici */}
+            {/* [PANNEAU LATÉRAL] : Sac à dos / Itinéraire */}
             <aside className={`fixed right-0 top-0 h-full bg-white dark:bg-slate-900 z-50 shadow-2xl transition-all duration-500 flex flex-col ${isPanelOpen ? 'w-[30%]' : 'w-0 overflow-hidden'}`}>
                 <div className="p-8 flex-1 overflow-y-auto">
                     <div className="flex justify-between items-center mb-8">
                         <h2 className="text-2xl font-black">Mon <span className="text-blue-600">Roadtrip</span></h2>
-                        <button onClick={() => setIsPanelOpen(false)}>✕</button>
+                        <button onClick={() => setIsPanelOpen(false)} className="text-2xl hover:rotate-90 transition-transform">✕</button>
                     </div>
 
                     {itinerary.length === 0 ? (
-                        <p className="text-slate-400 text-center py-10">Votre sac est vide 🎒</p>
+                        <div className="flex flex-col items-center justify-center h-64 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-3xl">
+                             <p className="text-slate-400 text-center">Votre sac est vide 🎒</p>
+                        </div>
                     ) : (
                         // WRAPPER DRAG & DROP
                         <DndContext
@@ -199,9 +231,12 @@ function App() {
                 </div>
 
                 {itinerary.length > 0 && (
-                    <div className="p-8 border-t border-slate-100 dark:border-slate-800">
-                        <button onClick={() => exportToPDF(itinerary)} className="w-full bg-emerald-600 text-white py-4 rounded-2xl font-bold">
-                            📄 EXPORTER LE PDF
+                    <div className="p-8 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
+                        <button
+                            onClick={() => exportToPDF(itinerary)}
+                            className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-4 rounded-2xl font-bold shadow-lg shadow-emerald-500/20 transition-all active:scale-95"
+                        >
+                            📄 EXPORTER LE RÉCIT (PDF)
                         </button>
                     </div>
                 )}
