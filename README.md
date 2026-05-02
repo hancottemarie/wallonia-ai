@@ -65,3 +65,4 @@ L'interface a été pensée comme une **Single Page Application (SPA)** fluide :
 cd core_engine
 gcc -shared -o scoring.so -fPIC scoring.c
 
+##
