@@ -175,7 +175,7 @@ function App() {
                                                     </button>
                                                     <button
                                                         onClick={() => setInspectedCity(city)}
-                                                        className="px-4 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
+                                                        className="px-4 bg-blue-50 dark:bg-slate-800 text-blue-600 dark:text-blue-400 rounded-xl hover:bg-blue-100 dark:hover:bg-slate-700 transition-all border border-blue-100 dark:border-slate-700"
                                                         title="Plus d'infos"
                                                     >
                                                         ℹ️

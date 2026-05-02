@@ -858,21 +858,6 @@
     "alternative_to": "Parc Omega"
   },
   {
-    "id": "espace-nature-de-la-botte-du-hainaut-177",
-    "name": "Espace Nature de la Botte du Hainaut",
-    "province": "Hainaut",
-    "category": "Nature",
-    "activity_level": 3,
-    "budget_index": 1,
-    "accessibility_train": false,
-    "coordinates": { "lat": 50.04, "lng": 4.3 },
-    "vibe_scores": { "nature": 9, "culture": 4, "nightlife": 1, "relax": 8 },
-    "best_months": ["Mai", "Juin", "Juillet", "Août", "Septembre"],
-    "tags": ["Nature", "Randonnée", "Forêt", "Campagne", "Biodiversité", "Wallonie", "Belgique"],
-    "description_fr": "Explorez la biodiversité préservée de la Botte du Hainaut, une région rurale offrant d'innombrables sentiers de randonnée.",
-    "alternative_to": "Forêt-Noire"
-  },
-  {
     "id": "le-château-du-fosteau-et-son-parc-à-thuin-près-de-charleroi-003",
     "name": "Le Château du Fosteau et son Parc",
     "province": "Hainaut",
@@ -886,21 +871,6 @@
     "tags": ["Château", "Patrimoine", "Jardin", "Parc", "Histoire", "Architecture", "Promenade", "Culture", "Famille"],
     "description_fr": "Le Château du Fosteau est un magnifique domaine historique avec des collections riches.",
     "alternative_to": "Château de Chenonceau"
-  },
-  {
-    "id": "musée-de-la-1ère-armée-française-de-cortil-noirmont-en-brabant-wallon-005",
-    "name": "Musée de la 1ère Armée Française de Cortil-Noirmont",
-    "province": "Brabant Wallon",
-    "category": "Musée",
-    "activity_level": 2,
-    "budget_index": 1,
-    "accessibility_train": false,
-    "coordinates": { "lat": 50.6094, "lng": 4.6297 },
-    "vibe_scores": { "nature": 1, "culture": 10, "nightlife": 1, "relax": 6 },
-    "best_months": ["Mai", "Juin", "Septembre"],
-    "tags": ["histoire", "guerre", "militaire", "musée", "brabant-wallon", "première-armée-française"],
-    "description_fr": "Ce musée est dédié à l'histoire et aux opérations de la 1ère Armée Française.",
-    "alternative_to": "Musée de l'Armée, Paris"
   },
   {
     "id": "centre-de-documentation-de-la-pierre-bleue-006",
