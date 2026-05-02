@@ -107,4 +107,4 @@ Zone de contenu principale : Application de classes dynamiques en JavaScript (te
 
 Le Panneau aside : Insertion d'une balise <aside> positionnée en fixed right-0 top-0 avec une hauteur de h-screen, permettant de lister les éléments de l'état itinerary.
 TODO: cleaning backend avec fichier mult et appel de fonctions dans main pour que ce soit plus propre comme fichier
-TODO: meme chose 
+TODO: meme chose pour le APP
