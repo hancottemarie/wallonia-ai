@@ -71,4 +71,4 @@ python -m venv venv
 source venv/bin/activate # ou .\venv\Scripts\activate sur Windows
 pip install -r requirements.txt
 uvicorn main:app --reload
-3. Lancer le Frontend (React)
+### 3. Lancer le Frontend (React)
