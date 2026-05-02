@@ -90,7 +90,7 @@ Le concept : Quand l'IA trouve une ville, un marqueur avec l'icône de la catég
 34. Ajout d'images supplementaires(TODO :images specifiques pour chaque destinations dans destinations.json) et icone sur la carte(TODO :a ammeliorer+ TODO: sur carte coffre-fort sur carte) plus random dans le main.py pour des % differents.
 35. ajout de barre de recherche en temps reel via app.jcx et le main.py STILL TO FIX
 36. dans tailwind.config.js pour le mode sombre debug complet du darkmode Tailwind v.4 suit le systeme par defaut, Il y a un ordre de priorite : Un style injecte en JS (le bouton)doit etre explicitement declare dans le CSS pour que Tailwind l'ecoute. Le selecteur :not(.dark) est un excellent moyen de garantir qu'un style ne s'applique que dans un etat precis.
-37. TODO: supplementaire fix le bouton darkmode qui disparait derriere la carte. C'est pas tres subtil.
+37. DONE: supplementaire fix le bouton darkmode qui disparait derriere la carte. C'est pas tres subtil.
 38. TODO: FIX barre de recherche+son icone
 39. Debut de feature supllementaire : filtrage par province;
 40. Pour rajouter cette feature il faut agir et au niveau du backend et du frontend. Pour le Backend : changement dans main.py Ajout de : - Recuperation de la province au debut de la fonction : selected_province = prefs.province.lower().strip() if prefs.province else ""
@@ -98,4 +98,4 @@ Ajout d'un Bloc de filtrage qui verifie si la province de la destination corresp
 Ajout de securite: ajout d'un test pour "toutes". Si le front envoie "Toutes", le filtre ne bloquera rien.
 41. Ajout d'une feature supllementaire : - Export PDF du Roadtrip : Un bouton pour générer un petit itinéraire avec les résultats.
 42. TODO : rajout d'info's dans le pdf qui sont pas sur l'interface et faire un vrai itineraire en ce basant sur les descriptions longues du destinations.json donc encore interventon de l'IA. Voir meme une fenetre qui s'ouvre en peu sur le cote une sorte de rectangle ou on peut faire un drag & drop pour creer notre iteneraire. et a ce moment la mettre le bouton pdf dans ce rectangle qui "slide" de la droite et qui fait glisser les elements derriere sur le cote.
-43. 
+43.
