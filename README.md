@@ -99,4 +99,10 @@ Ajout de securite: ajout d'un test pour "toutes". Si le front envoie "Toutes", l
 41. Ajout d'une feature supllementaire : - Export PDF du Roadtrip : Un bouton pour générer un petit itinéraire avec les résultats.
 42. TODO : rajout d'info's dans le pdf qui sont pas sur l'interface et faire un vrai itineraire en ce basant sur les descriptions longues du destinations.json donc encore interventon de l'IA. Voir meme une fenetre qui s'ouvre en peu sur le cote une sorte de rectangle ou on peut faire un drag & drop pour creer notre iteneraire. et a ce moment la mettre le bouton pdf dans ce rectangle qui "slide" de la droite et qui fait glisser les elements derriere sur le cote.
 43. Dans frontend/src/App.jsx :
-Gestion de 
+Gestion de l'état : Ajout d'un State itinerary (ex: const [itinerary, setItinerary] = useState([]);) pour stocker les sélections et d'un Boolean isPanelOpen pour piloter l'affichage du panneau.
+
+Conteneur Parent : La div principale a été modifiée avec les classes flex et overflow-x-hidden pour permettre la coexistence du contenu et du panneau latéral sans bug visuel.
+
+Zone de contenu principale : Application de classes dynamiques en JavaScript (template literals) pour réduire la taille (scale-[0.98]), ajouter une marge (mr-[30%]) et baisser l'opacité (opacity-50) dès que le panneau s'ouvre.
+
+Le Panneau aside : Insertion d'une balise <aside> positionnée en fixed right-0 top-0 avec une hauteur de h-screen, permettant de lister les éléments de l'état itinerary.
