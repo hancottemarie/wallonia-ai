@@ -108,20 +108,53 @@ function App() {
                             <>
                                 <div className="mb-12"><MapResults destinations={results} /></div>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-20">
-                                    {results.map((city) => (
-                                        <div key={city.id} className="bg-white dark:bg-slate-900 rounded-3xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800">
-                                            <div className="h-40 bg-slate-200">
-                                                <img src={city.image_url} className="w-full h-full object-cover" alt={city.name} />
-                                            </div>
-                                            <div className="p-6">
-                                                <h3 className="font-bold mb-2">{city.name}</h3>
-                                                <button onClick={() => addToItinerary(city)} className="w-full bg-blue-600 text-white py-2 rounded-xl text-xs font-bold">
-                                                    + Ajouter au plan
-                                                </button>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
+    {results.map((city) => (
+        <div key={city.id} className="bg-white dark:bg-slate-900 rounded-3xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2x1">
+
+            {/* Image de la destination */}
+            <div className="h-40 bg-slate-200 relative">
+                <img src={city.image_url} className="w-full h-full object-cover" alt={city.name} />
+
+                {/* Petit badge de province sur l'image */}
+                <div className="absolute top-3 left-3 bg-blue-600/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded-lg uppercase">
+                    {city.province}
+                </div>
+            </div>
+
+            <div className="p-6">
+                {/* --- BLOC MÉTÉO (NOUVEAU) --- */}
+                {city.weather && (
+                    <div className="flex items-center gap-2 mb-3 bg-blue-50/50 dark:bg-blue-900/20 w-fit px-3 py-1 rounded-full border border-blue-100 dark:border-blue-800/50">
+                        <img
+                            src={`https://openweathermap.org/img/wn/${city.weather.icon}.png`}
+                            alt="weather icon"
+                            className="w-6 h-6 object-contain"
+                        />
+                        <span className="text-sm font-black text-blue-600 dark:text-blue-400">
+                            {city.weather.temp}°C
+                        </span>
+                        <span className="text-[10px] font-medium text-slate-500 dark:text-slate-400 capitalize hidden sm:inline">
+                            • {city.weather.desc}
+                        </span>
+                    </div>
+                )}
+
+                {/* Nom de la ville */}
+                <h3 className="text-xl font-bold mb-4 text-slate-800 dark:text-white">
+                    {city.name}
+                </h3>
+
+                {/* Bouton d'action */}
+                <button
+                    onClick={() => addToItinerary(city)}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl text-xs font-bold shadow-md hover:shadow-blue-500/20 transition-all active:scale-95"
+                >
+                    + Ajouter au plan 🎒
+                </button>
+            </div>
+        </div>
+    ))}
+</div>
                             </>
                         )
                     )}

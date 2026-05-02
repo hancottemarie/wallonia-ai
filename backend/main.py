@@ -2,6 +2,7 @@ import ctypes
 import os
 import json
 import random
+import requests
 from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -66,6 +67,21 @@ Be witty and professional.
         print(f"Error AI: {e}")
         return "A wonderful hidden gem in Wallonia waiting to be explored."
 
+def get_weather(city_name: str):
+    api_key = os.environ.get("OPENWEATHER_API_KEY")
+    url = f"https://api.openweathermap.org/data/2.5/weather?q={city_name},BE&appid={api_key}&units=metric&lang=fr"
+    try:
+        response = requests.get(url, timeout=2)
+        if response.status_code == 200:
+            data = response.json()
+            return {
+                "temp": round(data["main"]["temp"]),
+                "icon": data["weather"][0]["icon"],
+                "desc": data["weather"][0]["description"]
+            }
+    except:
+        pass
+    return None # Retourne None si l'API échoue
 # --- MODELES ---
 class UserPreferences(BaseModel):
     vibe: str
@@ -139,6 +155,7 @@ def recommend_destinations(prefs: UserPreferences):
 
     for res in top_results:
         res["ai_description"] = get_ai_recommendation(res["name"], res.get("category", "Culture"))
+        res["weather"] = get_weather(res["name"])
 
     return top_results
 
@@ -160,9 +177,10 @@ Reste concis mais riche en détails.
     try:
         chat_completion = client.chat.completions.create(
             messages=[{"role": "user", "content": prompt}],
-            model="llama3-3.3-70b-versatile",
+            model="llama-3.3-70b-versatile", # <--- CORRIGÉ ICI (llama-3.3)
         )
         return {"story": chat_completion.choices[0].message.content}
     except Exception as e:
-        print(f"Error Story AI: {e}")
+        # Affiche l'erreur réelle dans ton terminal pour débugger
+        print(f"❌ Erreur Story AI : {e}")
         return {"story": "Un voyage extraordinaire vous attend à travers les paysages pittoresques de la Wallonie."}

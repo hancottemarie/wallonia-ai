@@ -53,6 +53,13 @@ export const exportToPDF = async (itinerary) => {
     currentY += 12;
 
     itinerary.forEach((city, index) => {
+		// Juste après le nom de la ville
+		if (city.weather) {
+			doc.setFontSize(9);
+			doc.setTextColor(50, 50, 50);
+			doc.text(`Météo actuelle : ${city.weather.temp}°C - ${city.weather.desc}`, margin + 5, currentY + 12);
+			currentY += 5; // On décale un peu le texte suivant
+		}
         // Nouveau titre d'étape
         doc.setFontSize(12);
         doc.setTextColor(30);
