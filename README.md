@@ -106,4 +106,5 @@ Conteneur Parent : La div principale a été modifiée avec les classes flex et 
 Zone de contenu principale : Application de classes dynamiques en JavaScript (template literals) pour réduire la taille (scale-[0.98]), ajouter une marge (mr-[30%]) et baisser l'opacité (opacity-50) dès que le panneau s'ouvre.
 
 Le Panneau aside : Insertion d'une balise <aside> positionnée en fixed right-0 top-0 avec une hauteur de h-screen, permettant de lister les éléments de l'état itinerary.
-TODO: cleaning backend 
+TODO: cleaning backend avec fichier mult et appel de fonctions dans main pour que ce soit plus propre comme fichier
+TODO: meme chose 
