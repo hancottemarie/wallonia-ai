@@ -1,46 +1,66 @@
-# 🏰 Wallonia.ai : Intelligence Artificielle & Planification de Roadtrip
+# 🏰 Wallonia.ai : Ingénierie Logicielle & IA Hybride
 
-[![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![React 19](https://img.shields.io/badge/Frontend-React_19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
-[![C Language](https://img.shields.io/badge/Engine-C_Language-A8B9CC?style=for-the-badge&logo=c&logoColor=white)](https://en.cppreference.com/w/c)
-[![Tailwind CSS](https://img.shields.io/badge/Design-Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-
-**Wallonia.ai** est une plateforme intelligente de recommandation de voyage conçue pour explorer les pépites de la Wallonie. Ce projet démontre une architecture full-stack hybride mêlant la performance du **C**, la flexibilité de **FastAPI** et une interface **React 19** immersive enrichie par l'IA générative.
+**Wallonia.ai** est une plateforme intelligente de planification de roadtrip conçue pour explorer les trésors de la Wallonie. Ce projet ne se limite pas à une interface élégante ; il s'agit d'un écosystème full-stack intégrant de la performance bas niveau (**C**), une orchestration **Python/FastAPI** robuste et une interface **React 19** immersive assistée par **IA Générative**.
 
 ---
 
-## 🚀 Architecture & Workflow Technique
+## 🏗️ Architecture & Choix Technologiques
 
-### 1. Pipeline de Données (ETL & IA)
-Le projet utilise un flux de données automatisé pour garantir des informations riches et structurées :
-*   **Extraction** : Scraping ciblé via `webscraper.io`.
-*   **Transformation IA** : Orchestration via `Make.com` (Scenario : Google Sheets ↔ Gemini) pour transformer les données brutes en JSON sémantique.
-*   **Validation** : Monitoring de la progression via Google Sheets (limite de test à 1, puis déploiement à 180 entrées).
+### 1. Data Pipeline : Du Brut au Sémantique
+Le cycle de vie de la donnée a été conçu pour automatiser l'enrichissement sémantique :
+*   **Ingestion (WebScraper.io)** : Extraction de données brutes depuis les portails touristiques.
+*   **Enrichissement IA (Make.com + Gemini)** : Orchestration d'un workflow automatisant le passage du CSV vers un **Graphe de Connaissances JSON**. L'IA structure les coordonnées GPS, les catégories de budget et les "vibes" pour permettre un filtrage algorithmique précis.
+*   **Validation Interactive** : Monitoring de la progression (validation par palier de 1 à 180 entrées) pour garantir l'intégrité de la base de données `/data/destinations.json`.
 
-### 2. Core Engine : Performance & Scoring (C / Python)
-Pour maximiser la réactivité, les calculs mathématiques sont déportés :
-*   **Moteur C** : Une librairie partagée (`scoring.c` -> `.so`) calcule un score pondéré (Vibe, Budget, Province) avec une précision de bas niveau.
-*   **Interopérabilité** : Utilisation de `ctypes` en Python pour appeler la fonction C avec une sécurité de fallback (calcul Python si la lib C est absente).
-*   **Logique de Tri** : Tri décroissant des scores et renvoi du **Top 5** via Pydantic pour une validation de données stricte.
+### 2. Performance Engine : L'approche Hybride C/Python
+L'un des piliers du projet est le déport de la logique de calcul de pertinence vers le bas niveau :
+*   **Moteur C (`scoring.c`)** : Implémentation d'un algorithme de pondération pondérant les préférences utilisateur (vibe, budget, province).
+*   **Interopérabilité via Shared Library (`.so`)** : Compilation en bibliothèque partagée et chargement dynamique via `ctypes`.
+*   **Choix d'Ingénierie** : Mise en place d'une sécurité **Fallback**. Si la librairie C est absente ou incompatible, le backend bascule automatiquement sur un moteur Python pur, garantissant la résilience du service.
 
 ### 3. Backend : FastAPI & Intelligence Narrative
-*   **IA Conversationnelle** : Utilisation de **Groq (Llama 3.1 & 3.3)** pour générer des descriptions uniques ("Hidden Gems") et rédiger le récit de voyage final.
-*   **Temps Réel** : Intégration de l'API OpenWeather pour enrichir chaque destination avec la météo actuelle.
-*   **Sécurité** : Gestion dynamique des chemins (objets `pathlib`) pour une compatibilité cross-platform (OS) totale.
+Le serveur FastAPI agit comme un chef d'orchestre :
+*   **Validation Pydantic** : Typage fort et validation des schémas d'entrée pour sécuriser les communications API.
+*   **IA Multi-Modèles (Groq)** :
+    *   **Llama 3.1 (8b)** : Descriptions ultra-rapides et personnalisées pour chaque destination.
+    *   **Llama 3.3 (70b)** : Génération de récits de voyage complexes pour l'export PDF.
+*   **Contextualisation Temps Réel** : Intégration de l'API **OpenWeatherMap** pour fournir des conseils basés sur la météo actuelle (ex: suggestions d'activités "indoor" en cas de pluie).
 
-### 4. Frontend : Interface Moderne & Immersive
-*   **Composants React** : Architecture "LEGO" avec des composants indépendants (TravelForm, CityDetailDrawer, SortableItem).
-*   **Cartographie** : Intégration de `React Leaflet` pour une visualisation interactive des destinations suggérées.
-*   **Planification Interactive** : Système de **Drag & Drop** (@dnd-kit) pour réorganiser son itinéraire en temps réel.
-*   **City Details (Style Blog)** : Un panneau latéral gauche inspiré des blogs de voyage (VisitWallonia) avec photos dynamiques, météo complète et recommandations IA (restaurants, secrets locaux).
-*   **Export PDF** : Génération d'un carnet de route luxueux via `jsPDF`, incluant le récit narratif généré par l'IA.
+### 4. Frontend : React 19 & UX de Slide
+L'interface a été pensée comme une **Single Page Application (SPA)** fluide :
+*   **Vite.js** : Choix motivé par la rapidité de build et l'efficacité du HMR (Hot Module Replacement).
+*   **Double Drawer System** :
+    *   **Tiroir Gauche (Blog)** : Affichage dynamique des détails de la ville avec photos Unsplash/LoremFlickr et conseils IA.
+    *   **Tiroir Droit (Sac à dos)** : Gestion d'itinéraire par **Drag & Drop** via `@dnd-kit`.
+*   **Layout Réactif** : La zone principale utilise des calculs de marges dynamiques (`ml-[450px]`, `mr-[30%]`) et des transitions CSS `transform` pour une fluidité sans rechargement de page.
 
 ---
 
-## 🛠️ Installation & Démarrage
+## 🛠️ Spécifications de la Stack
 
-### Backend (Python & C)
-1. **Compiler la librairie C** :
-   ```bash
-   cd core_engine
-   gcc -shared -o scoring.so -fPIC scoring.c
+| Couche | Technologie | Rôle |
+| :--- | :--- | :--- |
+| **Frontend** | React 19 + Vite | Interface réactive & Build tool performant |
+| **Styling** | Tailwind CSS v4 | Design "Utility-first" & Dark Mode natif |
+| **Backend** | FastAPI (Python 3) | API Gateway & Orchestration IA |
+| **Performance** | Langage C | Moteur de scoring pondéré via lib partagée |
+| **Intelligence** | Groq (Llama 3.x) | Génération narrative & Secrets locaux |
+| **Data** | Make.com / Gemini | Pipeline ETL et structuration JSON |
+
+---
+
+## 📈 Concepts d'Ingénierie Implémentés
+
+*   **Séparation des préoccupations (SoC)** : Découpage clair entre le calcul (C), la logique métier (Python) et l'UI (React).
+*   **Single Page Application (SPA)** : Utilisation de `e.preventDefault()` et Axios pour une navigation fluide sans rechargement de page.
+*   **Gestion de l'état asynchrone** : Mise en place de **Skeleton Loaders** pour masquer la latence des appels LLM.
+*   **Prompt Engineering** : Forçage de format JSON strict pour automatiser l'affichage des recommandations IA sans parsing manuel complexe.
+
+---
+
+## 🚀 Installation & Lancement
+
+### 1. Compiler le moteur C
+```bash
+cd core_engine
+gcc -shared -o scoring.so -fPIC scoring.c
