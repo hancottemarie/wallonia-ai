@@ -17,11 +17,16 @@ function App() {
     const [searchQuery, setSearchQuery] = useState("");
     const [isPanelOpen, setIsPanelOpen] = useState(false);
     const [itinerary, setItinerary] = useState([]);
+
+    // État pour la ville inspectée (Blog à gauche)
     const [inspectedCity, setInspectedCity] = useState(null);
 
+    // [CONFIG] Capteurs pour le Drag & Drop
     const sensors = useSensors(
         useSensor(PointerSensor),
-        useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+        useSensor(KeyboardSensor, {
+            coordinateGetter: sortableKeyboardCoordinates,
+        })
     );
 
     const handleSearch = async (formData) => {
@@ -29,10 +34,13 @@ function App() {
         try {
             const payload = { ...formData, search_query: searchQuery };
             const response = await axios.post('http://127.0.0.1:8000/recommend', payload);
+
+            // [SÉCURITÉ ID] : On s'assure que chaque résultat a un ID unique
             const dataWithIds = response.data.map((dest, index) => ({
                 ...dest,
                 id: dest.id || `city-${index}-${dest.name}`
             }));
+
             setResults(dataWithIds);
         } catch (error) {
             console.error("Erreur Backend:", error);
@@ -42,6 +50,7 @@ function App() {
         }
     };
 
+    // [LOGIQUE] Gestion de la fin du déplacement (D&D)
     function handleDragEnd(event) {
         const { active, over } = event;
         if (active.id !== over.id) {
@@ -67,14 +76,17 @@ function App() {
     return (
         <div className="flex min-h-screen w-full transition-colors duration-500 bg-slate-50 text-slate-900 dark:bg-[#020617] dark:text-white overflow-x-hidden">
 
-            {/* [MENU GAUCHE] - City Details */}
+            {/* [TIROIR GAUCHE] Toujours présent dans le DOM pour permettre l'animation de slide */}
             <CityDetailDrawer
                 city={inspectedCity}
                 isOpen={!!inspectedCity}
                 onClose={() => setInspectedCity(null)}
             />
 
-            {/* ZONE PRINCIPALE - Gère le slide bilatéral */}
+            {/* ZONE PRINCIPALE
+                ml-[450px] : décale le contenu quand le blog est ouvert
+                mr-[30%] : décale le contenu quand le sac à dos est ouvert
+            */}
             <div className={`transition-all duration-500 ease-in-out flex-1 flex flex-col
                 ${isPanelOpen ? 'mr-[30%] opacity-50 scale-[0.98] pointer-events-none' : 'mr-0'}
                 ${inspectedCity ? 'ml-[450px]' : 'ml-0'}`}
@@ -82,7 +94,7 @@ function App() {
 
                 <DarkModeToggle />
 
-                {/* Bouton Sac à dos - Se déplace si le menu de gauche est ouvert */}
+                {/* Bouton Sac à dos - On le cache si le blog est ouvert pour éviter les superpositions */}
                 <button
                     onClick={() => setIsPanelOpen(!isPanelOpen)}
                     className={`fixed top-20 right-6 z-40 bg-blue-600 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-all duration-500
@@ -95,6 +107,7 @@ function App() {
                     <h1 className="text-5xl font-black tracking-tight">Wallonia<span className="text-blue-600">.ai</span></h1>
                 </header>
 
+                {/* Barre de recherche */}
                 <div className="max-w-md mx-auto mb-6 relative px-4 text-slate-900">
                     <input
                         type="text"
@@ -114,9 +127,13 @@ function App() {
                         results.length > 0 && (
                             <>
                                 <div className="mb-12"><MapResults destinations={results} /></div>
+
+                                {/* Grille des destinations */}
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-20">
                                     {results.map((city) => (
                                         <div key={city.id} className="bg-white dark:bg-slate-900 rounded-3xl shadow-lg overflow-hidden border border-slate-100 dark:border-slate-800 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+
+                                            {/* Image cliquable pour ouvrir l'inspection */}
                                             <div
                                                 className="h-40 bg-slate-200 relative cursor-pointer group"
                                                 onClick={() => setInspectedCity(city)}
@@ -131,6 +148,7 @@ function App() {
                                             </div>
 
                                             <div className="p-6">
+                                                {/* Badge Météo */}
                                                 {city.weather && (
                                                     <div className="flex items-center gap-2 mb-3 bg-blue-50/50 dark:bg-blue-900/20 px-3 py-1.5 rounded-full border border-blue-100 dark:border-blue-800/50 w-full overflow-hidden">
                                                         <img src={`https://openweathermap.org/img/wn/${city.weather.icon}.png`} alt="weather icon" className="w-6 h-6 object-contain shrink-0" />
@@ -138,11 +156,14 @@ function App() {
                                                         <span className="text-[10px] font-medium text-slate-500 dark:text-slate-400 capitalize hidden sm:inline flex-1 truncate min-w-0">• {city.weather.desc}</span>
                                                     </div>
                                                 )}
+
                                                 <h3 className="text-xl font-bold mb-4 text-slate-800 dark:text-white">{city.name}</h3>
+
+                                                {/* Actions */}
                                                 <div className="flex gap-2">
                                                     <button
                                                         onClick={() => addToItinerary(city)}
-                                                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl text-xs font-bold shadow-md hover:shadow-blue-500/20 transition-all active:scale-95"
+                                                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl text-xs font-bold shadow-md transition-all active:scale-95"
                                                     >
                                                         + Ajouter 🎒
                                                     </button>
@@ -163,7 +184,7 @@ function App() {
                 </main>
             </div>
 
-            {/* [PANNEAU DROITE] - Sac à dos / Itinéraire */}
+            {/* [TIROIR DROITE] - Sac à dos / Itinéraire */}
             <aside className={`fixed right-0 top-0 h-full bg-white dark:bg-slate-900 z-50 shadow-2xl transition-all duration-500 flex flex-col ${isPanelOpen ? 'w-[30%]' : 'w-0 overflow-hidden'}`}>
                 <div className="p-8 flex-1 overflow-y-auto">
                     <div className="flex justify-between items-center mb-8">
@@ -188,6 +209,7 @@ function App() {
                     )}
                 </div>
 
+                {/* Footer du sac à dos avec export PDF */}
                 {itinerary.length > 0 && (
                     <div className="p-8 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
                         <button onClick={() => exportToPDF(itinerary)} className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-4 rounded-2xl font-bold shadow-lg shadow-emerald-500/20 transition-all active:scale-95">

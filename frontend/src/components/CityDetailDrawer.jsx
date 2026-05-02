@@ -8,7 +8,7 @@ const CityDetailDrawer = ({ city, isOpen, onClose }) => {
   useEffect(() => {
     if (city && isOpen) {
       setLoading(true);
-      setDetails(null); // On vide les détails précédents pour le nouvel affichage
+      setDetails(null); // Reset pour repartir sur du propre
 
       const cityNameEncoded = encodeURIComponent(city.name);
       fetch(`http://localhost:8000/city-details/${cityNameEncoded}?weather=${city.weather.condition}`)
@@ -24,23 +24,24 @@ const CityDetailDrawer = ({ city, isOpen, onClose }) => {
     }
   }, [city, isOpen]);
 
-  // LE BOUCLIER : Sécurise l'affichage pour éviter l'erreur "Objects are not valid as a React child"
+  // LE BOUCLIER : Extrait du texte peu importe si l'IA renvoie une string ou un objet
   const renderText = (value) => {
     if (!value) return "";
     if (typeof value === 'string' || typeof value === 'number') return value;
     if (typeof value === 'object') {
-      return value.description || value.texte || value.contenu || value.lieu || value.nom || "";
+      // Cherche n'importe quelle clé textuelle probable
+      return value.description || value.texte || value.contenu || value.lieu || value.nom || value.conseil || "";
     }
     return "";
   };
 
-  // NOTE: On ne fait plus de "return null" ici pour que l'animation CSS puisse fonctionner
+  // Note : On ne retourne plus "null" si !city pour permettre l'animation CSS de slide
   return (
     <div className={`fixed inset-y-0 left-0 z-50 w-full md:w-[450px] bg-white dark:bg-slate-900 shadow-2xl
       transform transition-transform duration-500 ease-in-out
       ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
     >
-      {/* On ne rend le contenu intérieur que si "city" existe pour éviter les erreurs de lecture */}
+      {/* On ne rend le contenu intérieur que si "city" existe réellement */}
       {city && (
         <div className="h-full flex flex-col">
 
@@ -57,7 +58,6 @@ const CityDetailDrawer = ({ city, isOpen, onClose }) => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent" />
 
-            {/* BOUTON FERMER */}
             <button
               onClick={onClose}
               className="absolute top-4 right-4 bg-black/30 hover:bg-black/60 backdrop-blur-md p-2.5 rounded-full text-white transition-all z-10"
@@ -88,6 +88,7 @@ const CityDetailDrawer = ({ city, isOpen, onClose }) => {
             ) : (
               /* CONTENU IA */
               <div className="space-y-8 animate-fadeIn">
+
                 {/* INTRODUCTION */}
                 <section>
                   <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed italic border-l-4 border-blue-500 pl-4">
@@ -95,15 +96,20 @@ const CityDetailDrawer = ({ city, isOpen, onClose }) => {
                   </p>
                 </section>
 
-                {/* CONSEIL METEO / ASTUCE */}
+                {/* CONSEIL (Multi-clés pour éviter le vide) */}
                 <div className="bg-blue-50 dark:bg-blue-900/20 p-5 rounded-2xl flex items-start gap-4 border border-blue-100 dark:border-blue-800">
                   <span className="text-2xl mt-1">💡</span>
                   <p className="text-sm text-blue-900 dark:text-blue-200 leading-relaxed">
-                    <span className="font-bold">Conseil :</span> {renderText(details?.meteo_conseil || details?.conseil || details?.astuce)}
+                    <span className="font-bold">Conseil :</span> {
+                      renderText(details?.meteo_conseil) ||
+                      renderText(details?.conseil) ||
+                      renderText(details?.astuce) ||
+                      "Profitez de l'atmosphère unique de cette destination !"
+                    }
                   </p>
                 </div>
 
-                {/* RESTAURANTS & ADRESSES */}
+                {/* RESTAURANTS */}
                 <div>
                   <h3 className="text-xl font-bold mb-5 text-slate-800 dark:text-white flex items-center gap-2">
                     <span>🍴</span> Bonnes adresses
